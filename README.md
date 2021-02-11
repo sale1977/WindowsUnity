@@ -388,7 +388,6 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   |   |       nv_updater_setup_0.6.1.4.exe
 |   |   |       
 |   |   +---Office
-|   |   |   |   Configuration-Office2019-SALE - Kopie.xml
 |   |   |   |   Configuration-Office2019-SALE.xml
 |   |   |   |   configuration-Office2019Enterprise.xml
 |   |   |   |   configuration-Office365-x64.xml
@@ -396,8 +395,6 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   |   |   |   download.cmd
 |   |   |   |   install.cmd
 |   |   |   |   setup.exe
-|   |   |   |   setup.exe - Download.lnk
-|   |   |   |   setup.exe - Installation.lnk
 |   |   |   |   
 |   |   |   \---Office
 |   |   |       \---Data
@@ -419,7 +416,6 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   |   |                   stream.x86.x-none.dat
 |   |   |                   
 |   |   +---OneDrive
-|   |   |       Download.url
 |   |   |       OneDriveSetup.exe
 |   |   |       
 |   |   +---ookla-speedtest
@@ -485,8 +481,6 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   |   |       setNetworkPrivate.ps1
 |   |   |       tune.cmd
 |   |   |       UnpinTaskbar.ps1
-|   |   |       Untitled-1.txt
-|   |   |       Windows_Activation.cmd
 |   |   |       
 |   |   +---SMTPSend
 |   |   |       SMTPSend.exe
@@ -543,7 +537,6 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   |   |   |   install.cmd
 |   |   |   |   
 |   |   |   +---KB4537572
-|   |   |   |       Neue Internetverknüpfung.url
 |   |   |   |       windows10.0-kb4537572-x64-ndp48_3a5beca9ff3bd1e1c72b7afa13beed94d6974ee9.msu
 |   |   |   |       
 |   |   |   +---KB4537759
