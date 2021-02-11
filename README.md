@@ -5,7 +5,7 @@ Performance, Stability and Safety in a modern World.
 Username: admin
 Password: demo
 
-'' 
+```
 C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 +---$$
 |   |   Bginfo64.exe
@@ -141,4 +141,4 @@ C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
                 autoupdate__disable_autorun_on_startup.bat
                 autoupdate__enable_autorun_on_startup.bat
                 autoupdate__info.txt
-''
+```
