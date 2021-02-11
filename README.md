@@ -1,12 +1,12 @@
 # WindowsUnity
 Intetgral Mix between a practical Performance, Stability and Safety (Trustworthy) Desktop-Computing in a modern World.
 
-# Default User
-Username: admin
+## Default User
+Username: `admin`
 
-Password: demo
+Password: `demo`
 
-# Auflistung der Ordnerpfade
+## Auflistung der Ordnerpfade
 ```
 C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   
