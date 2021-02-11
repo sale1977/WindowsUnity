@@ -6,7 +6,7 @@ Username: `admin`
 
 Password: `demo`
 
-## Auflistung der Ordnerpfade
+## Listing Folders within $OEM$ on Installation-Source
 ```
 C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
 |   
