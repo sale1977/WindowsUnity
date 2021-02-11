@@ -1,5 +1,5 @@
 # WindowsUnity
-Performance, Stability and Safety in a modern World.
+Intetgral Mix between a practical Performance, Stability and Safety (Trustworthy) Desktop-Computing in a modern World.
 
 # Default User
 Username: admin
