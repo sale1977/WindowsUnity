@@ -3,6 +3,7 @@ Intetgral Mix between a practical Performance, Stability and Safety (Trustworthy
 
 # Default User
 Username: admin
+
 Password: demo
 
 # Auflistung der Ordnerpfade
