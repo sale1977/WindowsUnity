@@ -8,7 +8,6 @@ Password: demo
 # Auflistung der Ordnerpfade
 ```
 C:\SETUPDEPLOYMENT\BUILD\MEDIA\SOURCES\$OEM$
-|   output.txt
 |   
 +---$$
 |   |   Bginfo64.exe
