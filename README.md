@@ -7,9 +7,13 @@ Benutzername | Passwort
 -------- | --------
  `admin` | `demo`
 
-## Treiber Installationsbereit bereitstellen
+## Treiber bereitstellen
 
-Das Installationsscript *C:\Drivers\installDrivers.cmd* als Verknüpfung am Desktop, installiert spezifische Treiber für individuelle Endgeräte wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den Modellspezifischen Ordner (`wmic CSPRODUCT get Name`) nach der im [Zpaq-gepackten](http://mattmahoney.net/dc/zpaq.html) Datei *repo.zpaq*. 
+Das Installationsscript *C:\Drivers\installDrivers.cmd* als Verknüpfung am Desktop, kann spezifische Treiber für individuelle Endgeräte installieren wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den modellspezifischen Ordner mit dem Namen aus dem Befehl (`wmic CSPRODUCT get Name`). Hierin muss die Datei im [Zpaq-gepackten](http://mattmahoney.net/dc/zpaq.html) gepackten Format mit dem Namen *repo.zpaq* vorhanden sein. 
+
+Für die Erstellung ihrer Endgeräte-Treiber in Form der Datei *repo.zpaq* installieren Sie idealerweise auf einer Referenzmaschine die herstellerspezifischen Treiber (z. B. von Dell, Lenovo, HP etc.) exportieren. Der Export von Treiberdateien kann mit dem Befehl `dism /Online /Export-Driver /Destination:C:\Drivers\Modelname` erfolgen. Als Zielordner wählen Sie den modellspezifischen Pfad C:\Drivers\\*Model*. Bei dem Namen des Ordners von *Model* muss exakt der Namen aus dem Befehl `wmic CSPRODUCT get Name` übernommen werden.
+
+Sobald die Treiberdateien im Ordner (bsp. C:\Drivers\HP ProBook 450 G3) vorliegen, kann der Inhalt mit dem Zpaq-Tool als repo.zpaq-Datei gepackt werden. Dies erfolgt mit dem Befehl `zpaq a repo.zpaq *.* -m2`.
 
 ## Listing Folders within $OEM$ on Installation-Source
 ```
