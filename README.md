@@ -1,14 +1,15 @@
 # WindowsUnity
 Intetgral Mix between a practical Performance, Stability and Safety (Trustworthy) Desktop-Computing in a modern World.
 
-## Default User
-Username: `admin`
-
-Password: `demo`
+## Anmeldedaten Standardbenutzerkonto
+Das administrative Benutzerkonto für die Anmeldung wird von der Datei [AutoUnattend.xml](https://github.com/sale1977/WindowsUnity/blob/main/AutoUnattend.xml) erstellt. Es empfiehlt sich, dass Benutzerkonto und das Passwort nach der Windows-Unity-Bereitstellung zu ändern.
+Benutzername | Passwort 
+-------- | --------
+ `admin` | `demo`
 
 ## Treiber Installationsbereit bereitstellen
 
-Das Installationsscript *C:\Windows\nircmdc.exe elevate C:\Drivers\installDrivers.cmd* am Desktop installiert Endgerät-spezifische Treiber wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den Modellspezifischen Ordner (`wmic CSPRODUCT get Name`) nach der im [Zpaq-gepackten Datei](http://mattmahoney.net/dc/zpaq.html) *repo.zpaq*. 
+Das Installationsscript *C:\Windows\nircmdc.exe elevate C:\Drivers\installDrivers.cmd* am Desktop installiert Endgerät-spezifische Treiber wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den Modellspezifischen Ordner (`wmic CSPRODUCT get Name`) nach der im [Zpaq-gepackten](http://mattmahoney.net/dc/zpaq.html) Datei *repo.zpaq*. 
 
 ## Listing Folders within $OEM$ on Installation-Source
 ```
