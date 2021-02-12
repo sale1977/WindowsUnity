@@ -2,7 +2,7 @@
 Die Komposition aus dem Betriebssystem Windows 10 und den **WindowsUnity-Richtliniensatz** verfolgt mehrere Ziele:
 - [x] Neben der rascheren **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) / [**Systemhärtung**](https://www.fb-pro.com/was-ist-systemhaertung-welche-massnahmen-gibt-es/) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
 - [x] durch praktische Parametrierungen mehr **Geschwindigkeit (Performance)** bei gleichbleibender **Stabilität** aus dem Betriebssystem zu gewinnen, 
-- [x] sowie letztlich eine **bessere Benutzererfahrung** und **Privacy** für Endanwender durch Reduzierung von oftmals "irreführenden" Dialogen und Einschränkung bei der Übertragung von Telemtriedaten an Microsoft sicherzustellen. 
+- [x] sowie letztlich eine **bessere Benutzererfahrung** und **Privacy** für die Endanwender sicherzustellen - durch Reduzierung von oftmals "irreführenden" Dialogen und Einschränkung bei der Übertragung von Telemtriedaten an Microsoft. 
 
 Bei den umgesetzten Richtlinien zur Härtung orientiert sich *Windows Unity* unter anderem an folgende Richtlinien:
 - https://techcommunity.microsoft.com/t5/microsoft-security-baselines/bg-p/Microsoft-Security-Baselines
