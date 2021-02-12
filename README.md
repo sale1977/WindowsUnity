@@ -1,8 +1,10 @@
 # WindowsUnity
 Die Komposition aus dem Betriebssystem Windows 10 und den **WindowsUnity-Richtliniensatz** verfolgt mehrere Ziele:
-- [x] Neben der **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
+- [x] Neben der **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) / [**Systemhärtung**](https://www.fb-pro.com/was-ist-systemhaertung-welche-massnahmen-gibt-es/) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
 - [x] durch praktische Parametrierungen mehr **Geschwindigkeit (Performance)** bei gleichbleibender **Stabilität** aus dem Betriebssystem zu gewinnen, 
 - [x] sowie letztlich eine **bessere Benutzererfahrung** und **Privacy** für Endanwender durch Reduzierung von oftmals "irreführenden" Dialogen und Einschränkung bei der Übertragung von Telemtriedaten an Microsoft sicherzustellen. 
+
+// Möglicherweise werden auch Sie **Windows Unity** beim täglichen Einsatz so lieben wie wir :cupid: //
 
 ## Anmeldedaten Standardbenutzerkonto
 Das administrative Benutzerkonto für die Anmeldung wird von der Datei [AutoUnattend.xml](https://github.com/sale1977/WindowsUnity/blob/main/AutoUnattend.xml) erstellt. Es empfiehlt sich, dass Benutzerkonto und das Passwort nach der Windows-Unity-Bereitstellung zu ändern.
