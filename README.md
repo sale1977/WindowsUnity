@@ -1,5 +1,5 @@
 # WindowsUnity
-Intetgral Mix between a practical Performance, Stability and Safety (Trustworthy) Desktop-Computing in a modern World.
+Die Komposition aus dem Betriebssystem Windows 10 und den **WindowsUnity-Richtliniensatz** verfolgt die Ziele neben der [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) des Betriebssystems und seiner Anwendungen, praktisch mehr **Geschwindigkeit (Performance)** bei gleichbleibender **Stabilität des Systems** zu führen, sowie eine **bessere Benutzererfahrung** für Endanwender sicherstellen. 
 
 ## Anmeldedaten Standardbenutzerkonto
 Das administrative Benutzerkonto für die Anmeldung wird von der Datei [AutoUnattend.xml](https://github.com/sale1977/WindowsUnity/blob/main/AutoUnattend.xml) erstellt. Es empfiehlt sich, dass Benutzerkonto und das Passwort nach der Windows-Unity-Bereitstellung zu ändern.
