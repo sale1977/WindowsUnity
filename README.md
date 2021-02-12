@@ -1,8 +1,15 @@
 # WindowsUnity
 Die Komposition aus dem Betriebssystem Windows 10 und den **WindowsUnity-Richtliniensatz** verfolgt mehrere Ziele:
-- [x] Neben der **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) / [**Systemhärtung**](https://www.fb-pro.com/was-ist-systemhaertung-welche-massnahmen-gibt-es/) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
+- [x] Neben der rascheren **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) / [**Systemhärtung**](https://www.fb-pro.com/was-ist-systemhaertung-welche-massnahmen-gibt-es/) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
 - [x] durch praktische Parametrierungen mehr **Geschwindigkeit (Performance)** bei gleichbleibender **Stabilität** aus dem Betriebssystem zu gewinnen, 
 - [x] sowie letztlich eine **bessere Benutzererfahrung** und **Privacy** für Endanwender durch Reduzierung von oftmals "irreführenden" Dialogen und Einschränkung bei der Übertragung von Telemtriedaten an Microsoft sicherzustellen. 
+
+Bei den umgesetzten Richtlinien zur Härtung orientiert sich *Windows Unity* unter anderem an folgende Richtlinien:
+- https://techcommunity.microsoft.com/t5/microsoft-security-baselines/bg-p/Microsoft-Security-Baselines
+- https://www.teletrust.de/publikationen/broschueren/stand-der-technik/
+- https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/IT-Grundschutz-Kompendium/it-grundschutz-kompendium_node.html
+- https://www.stigviewer.com/stig/windows_10/
+- https://www.cisecurity.org/benchmark/microsoft_windows_desktop/
 
 // Möglicherweise werden auch Sie **Windows Unity** beim täglichen Einsatz so lieben wie wir :cupid: //
 
