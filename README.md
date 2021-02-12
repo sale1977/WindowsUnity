@@ -8,7 +8,7 @@ Password: `demo`
 
 ## Treiber Installationsbereit bereitstellen
 
-Das Installationsscript *C:\Windows\nircmdc.exe elevate C:\Drivers\installDrivers.cmd* am Desktop installiert Endgerät-spezifische Treiber wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den Modellspezifischen Ordner (`wmic CSPRODUCT get Name`) nach der im Zpaq-gepackten Datei *repo.zpaq*. 
+Das Installationsscript *C:\Windows\nircmdc.exe elevate C:\Drivers\installDrivers.cmd* am Desktop installiert Endgerät-spezifische Treiber wenn diese aufbereitet sind. Das Script sucht im Verzeichnis `%SYSTEMDRIVE%\Drivers` den Modellspezifischen Ordner (`wmic CSPRODUCT get Name`) nach der im [Zpaq-gepackten Datei](http://mattmahoney.net/dc/zpaq.html) *repo.zpaq*. 
 
 ## Listing Folders within $OEM$ on Installation-Source
 ```
