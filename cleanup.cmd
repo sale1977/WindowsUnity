@@ -1,5 +1,7 @@
 @PUSHD %~DP0
 msg * Sequenz %~f0 wird verarbeitet. Bitte haben Sie Geduld bis das Device automatisch neustartet - es werden noch Konfigurationsarbeiten durchgeführt.
+:: Wallpaper
+reg add "HKCU\Control Panel\Desktop" /v WallPaper /t REG_SZ /d "C:\Windows\Web\Wallpaper\winunity.jpg" /f >NUL 2>&1
 sc config lfsvc start= disabled > NUL 2>&1
 sc config SSDPSRV start= disabled > NUL 2>&1
 sc config upnphost start= disabled > NUL 2>&1
@@ -81,6 +83,7 @@ netsh advfirewall firewall add rule name="10000__PERMI__SVC__TIME" dir=out actio
 netsh advfirewall firewall add rule name="10002__PERMI__ICMP_PRIV" protocol=icmpv4:any,any dir=in action=allow profile=private,domain remoteip=localsubnet >NUL 2>&1
 netsh advfirewall firewall add rule name="10003__PERMI__APP__Teams-TCP" dir=out action=allow protocol=TCP localip=any remoteip=any program="%localappdata%\microsoft\Teams\current\teams.exe" >NUL 2>&1
 netsh advfirewall firewall add rule name="10003__PERMI__APP__Teams-UDP" dir=out action=allow protocol=UDP localip=any remoteip=any program="%localappdata%\microsoft\Teams\current\teams.exe" >NUL 2>&1
+netsh advfirewall firewall add rule name="10004__PERMI__APP__TouchPortal" dir=in action=allow protocol=any localip=any remoteip=any program="C:\Program Files (x86)\Touch Portal\TouchPortal.exe" >NUL 2>&1
 netsh advfirewall firewall add rule name="00000__BLOCK__APP__Cortana" dir=out action=block localip=any remoteip=any interface=any program="%WINDIR%\systemapps\Microsoft.Windows.Cortana._cw5n1h2txyewy\SearchUI.exe" >NUL 2>&1
 netsh advfirewall firewall add rule name="00000__BLOCK__APP__CERTUTIL" dir=out action=block localip=any remoteip=any interface=any program="%WINDIR%\System32\certutil.exe" >NUL 2>&1
 netsh advfirewall firewall add rule name="00001__BLOCK__APP__SystemSettings" dir=out action=block localip=any remoteip=any interface=any program="%WINDIR%\ImmersiveControlPanel\SystemSettings.exe" >NUL 2>&1
@@ -95,6 +98,61 @@ netsh advfirewall firewall set rule name="Benutzererfahrung und Telemetrie im ve
 netsh advfirewall firewall set rule group="Hilfe anfordern" new enable=no >NUL 2>&1
 netsh advfirewall firewall set rule group="Windows Media Player-Netzwerkfreigabedienst" new enable=no >NUL 2>&1
 netsh advfirewall firewall set rule dir=in name="Datei- und Druckerfreigabe (SMB eingehend)" new enable=no >NUL 2>&1
+netsh advfirewall firewall add rule name="telemetry_vortex.data.microsoft.com" dir=out action=block remoteip=191.232.139.254 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_telecommand.telemetry.microsoft.com" dir=out action=block remoteip=65.55.252.92 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_oca.telemetry.microsoft.com" dir=out action=block remoteip=65.55.252.63 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_sqm.telemetry.microsoft.com" dir=out action=block remoteip=65.55.252.93 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_watson.telemetry.microsoft.com" dir=out action=block remoteip=65.55.252.43,65.52.108.29 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_redir.metaservices.microsoft.com" dir=out action=block remoteip=194.44.4.200,194.44.4.208 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_choice.microsoft.com" dir=out action=block remoteip=157.56.91.77 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.7 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_reports.wes.df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.91 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_wes.df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.93 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_services.wes.df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.92 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_sqm.df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.94 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.9 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_watson.ppe.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.11 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_telemetry.appex.bing.net" dir=out action=block remoteip=168.63.108.233 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_telemetry.urs.microsoft.com" dir=out action=block remoteip=157.56.74.250 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_settings-sandbox.data.microsoft.com" dir=out action=block remoteip=111.221.29.177 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_vortex-sandbox.data.microsoft.com" dir=out action=block remoteip=64.4.54.32 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_survey.watson.microsoft.com" dir=out action=block remoteip=207.68.166.254 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_watson.live.com" dir=out action=block remoteip=207.46.223.94 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_watson.microsoft.com" dir=out action=block remoteip=65.55.252.71 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_statsfe2.ws.microsoft.com" dir=out action=block remoteip=64.4.54.22 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_corpext.msitadfs.glbdns2.microsoft.com" dir=out action=block remoteip=131.107.113.238 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_compatexchange.cloudapp.net" dir=out action=block remoteip=23.99.10.11 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_cs1.wpc.v0cdn.net" dir=out action=block remoteip=68.232.34.200 enable=no >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_a-0001.a-msedge.net" dir=out action=block remoteip=204.79.197.200 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_statsfe2.update.microsoft.com.akadns.net" dir=out action=block remoteip=64.4.54.22 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_sls.update.microsoft.com.akadns.net" dir=out action=block remoteip=157.56.77.139 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_fe2.update.microsoft.com.akadns.net" dir=out action=block remoteip=134.170.58.121,134.170.58.123,134.170.53.29,66.119.144.190,134.170.58.189,134.170.58.118,134.170.53.30,134.170.51.190 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_diagnostics.support.microsoft.com" dir=out action=block remoteip=157.56.121.89 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_corp.sts.microsoft.com" dir=out action=block remoteip=131.107.113.238 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_statsfe1.ws.microsoft.com" dir=out action=block remoteip=134.170.115.60 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_pre.footprintpredict.com" dir=out action=block remoteip=204.79.197.200 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_i1.services.social.microsoft.com" dir=out action=block remoteip=104.82.22.249 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_feedback.windows.com" dir=out action=block remoteip=134.170.185.70 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_feedback.microsoft-hohm.com" dir=out action=block remoteip=64.4.6.100,65.55.39.10 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_feedback.search.microsoft.com" dir=out action=block remoteip=157.55.129.21 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_rad.msn.com" dir=out action=block remoteip=207.46.194.25 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_preview.msn.com" dir=out action=block remoteip=23.102.21.4 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_dart.l.doubleclick.net" dir=out action=block remoteip=173.194.113.220,173.194.113.219,216.58.209.166 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_ads.msn.com" dir=out action=block remoteip=157.56.91.82,157.56.23.91,104.82.14.146,207.123.56.252,185.13.160.61,8.254.209.254 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_a.ads1.msn.com" dir=out action=block remoteip=198.78.208.254,185.13.160.61 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_global.msads.net.c.footprint.net" dir=out action=block remoteip=185.13.160.61,8.254.209.254,207.123.56.252 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_az361816.vo.msecnd.net" dir=out action=block remoteip=68.232.34.200 enable=no >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_oca.telemetry.microsoft.com.nsatc.net" dir=out action=block remoteip=65.55.252.63 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_reports.wes.df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.91 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_df.telemetry.microsoft.com" dir=out action=block remoteip=65.52.100.7 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_cs1.wpc.v0cdn.net" dir=out action=block remoteip=68.232.34.200 enable=no >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_vortex-sandbox.data.microsoft.com" dir=out action=block remoteip=64.4.54.32 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_pre.footprintpredict.com" dir=out action=block remoteip=204.79.197.200 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_i1.services.social.microsoft.com" dir=out action=block remoteip=104.82.22.249 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_ssw.live.com" dir=out action=block remoteip=207.46.101.29 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_statsfe1.ws.microsoft.com" dir=out action=block remoteip=134.170.115.60 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_msnbot-65-55-108-23.search.msn.com" dir=out action=block remoteip=65.55.108.23 enable=yes >nul 2>&1
+netsh advfirewall firewall add rule name="telemetry_a23-218-212-69.deploy.static.akamaitechnologies.com" dir=out action=block remoteip=23.218.212.69 enable=yes >nul 2>&1
 :: netsh advfirewall firewall add rule name="StopYoutubeCDNBrake" dir=in action=block remoteip=173.194.55.0/24,206.111.0.0/16 enable=yes >NUL 2>&1
 :: Netsh.exe advfirewall firewall add rule name="Block Notepad.exe netconns" program="%systemroot%\system32\notepad.exe" protocol=tcp dir=out enable=yes action=block profile=any
 :: Netsh.exe advfirewall firewall add rule name="Block regsvr32.exe netconns" program="%systemroot%\system32\regsvr32.exe" protocol=tcp dir=out enable=yes action=block profile=any
@@ -105,8 +163,20 @@ netsh advfirewall firewall set rule dir=in name="Datei- und Druckerfreigabe (SMB
 :: Netsh.exe advfirewall firewall add rule name="Block runscripthelper.exe netconns" program="%systemroot%\system32\runscripthelper.exe" protocol=tcp dir=out enable=yes action=block profile=any
 :: Netsh.exe advfirewall firewall add rule name="Block hh.exe netconns" program="%systemroot%\system32\hh.exe" protocol=tcp dir=out enable=yes action=block profile=any
 :: Netsh.exe advfirewall firewall add rule name="Block rundll32 netconns" program="%systemroot%\system32\rundll32.exe" protocol=tcp dir=out enable=yes action=block profile=any
-
 netsh advfirewall firewall add rule name="YoutubeBufferTrick" dir=in action=block remoteip=173.194.55.0/24,206.111.0.0/16 >NUL 2>&1
+:: Adding DoH entries for AdGuard
+netsh dns add encryption server=94.140.14.14 dohtemplate=https://dns.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=94.140.15.15 dohtemplate=https://dns.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::ad1:ff dohtemplate=https://dns.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::ad2:ff dohtemplate=https://dns.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=94.140.14.15 dohtemplate=https://dns-family.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=94.140.15.16 dohtemplate=https://dns-family.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::bad1:ff dohtemplate=https://dns-family.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::bad2:ff dohtemplate=https://dns-family.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=94.140.14.140 dohtemplate=https://dns-unfiltered.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=94.140.14.141 dohtemplate=https://dns-unfiltered.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::1:ff dohtemplate=https://dns-unfiltered.adguard.com/dns-query >NUL 2>&1
+netsh dns add encryption server=2a10:50c0::2:ff dohtemplate=https://dns-unfiltered.adguard.com/dns-query >NUL 2>&1
 
 :: netsh int tcp set global autotuninglevel=normal >NUL 2>&1
 :: netsh winsock set autotuning on >NUL 2>&1
@@ -224,6 +294,13 @@ bcdedit /set disabledynamictick > NUL 2>&1
 :: Enable Features
 Dism.exe /Online /Enable-Feature /NoRestart /featurename:DirectPlay /all /Quiet >nul 2>&1
 
+:: Enabling Group Policy Editor if not already present
+IF NOT EXIST "%SystemRoot%\System32\gpedit.msc" (
+	dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt
+	dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt 
+	for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"%SystemRoot%\servicing\Packages\%%i"
+)
+
 :: Disable Features
 Dism /Online /Disable-Feature /FeatureName:Printing-XPSServices-Features /Quiet /NoRestart >nul 2>&1
 dism /Online /norestart /disable-feature /featurename:WindowsMediaPlayer >nul 2>&1
@@ -267,6 +344,57 @@ cscript "C:\Windows\System32\Printing_Admin_Scripts\de-de\prndrvr.vbs" -d -m "Mi
 :: MS Teams Firewall rules
 @powershell -noni -nol -nop -w hidden -ex bypass -co "& { new-netfirewallRule -name ${env:UserName}-Teams.exe-tcp -Displayname ${UserName}-Teams.exe-tcp -enabled:true -Profile Any -Direction Inbound -Action Allow -program ${LocalAppData}\microsoft\teams\current\teams.exe -protocol TCP -ErrorAction SilentlyContinue }" >nul 2>&1
 @powershell -noni -nol -nop -w hidden -ex bypass -co "& { new-netfirewallRule -name ${env:UserName}-Teams.exe-udp -Displayname ${UserName}-Teams.exe-udp -enabled:true -Profile Any -Direction Inbound -Action Allow -program ${LocalAppData}\microsoft\teams\current\teams.exe -protocol UDP -ErrorAction SilentlyContinue }" >nul 2>&1
+
+:: Mehr Details im Löschen-Dialog
+reg add "HKCR\AllFilesystemObjects" /v "FileOperationPrompt" /t REG_SZ /d "prop:System.PropGroup.FileSystem;System.ItemNameDisplay;System.ItemTypeText;System.ItemFolderPathDisplay;System.Size;System.DateCreated;System.DateModified;System.FileAttributes;System.OfflineAvailability;System.OfflineStatus;System.SharedWith;System.FileOwner;System.ComputerName" /f >nul 2>&1
+
+:: PowerCM
+Reg add "HKCR\DesktopBackground\Shell\Power" /v "MUIVerb" /t REG_SZ /d "Power" /f >nul 2>&1
+Reg add "HKCR\DesktopBackground\Shell\Power" /v "SubCommands" /t REG_SZ /d "Lock;SwitchUser;SignOut;Sleep;Hibernate;HybridShutdown;ShutDown;Restart;BootOptions" /f >nul 2>&1
+Reg add "HKCR\DesktopBackground\Shell\Power" /v "icon" /t REG_SZ /d "shell32.dll,-221" /f >nul 2>&1
+Reg add "HKCR\DesktopBackground\Shell\Power" /v "Position" /t REG_SZ /d "bottom" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Lock" /ve /t REG_SZ /d "Host sperren" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Lock" /v "icon" /t REG_SZ /d "shell32.dll,-48" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Lock\command" /ve /t REG_SZ /d "rundll32 user32.dll, LockWorkStation" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SwitchUser" /ve /t REG_SZ /d "Switch User" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SwitchUser" /v "icon" /t REG_SZ /d "imageres.dll,-88" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SwitchUser\command" /ve /t REG_SZ /d "tsdiscon" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SignOut" /ve /t REG_SZ /d "Sign out" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SignOut" /v "icon" /t REG_SZ /d "shell32.dll,-45" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\SignOut\command" /ve /t REG_SZ /d "shutdown -L" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\ShutDown" /ve /t REG_SZ /d "Full Shut down" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\ShutDown" /v "icon" /t REG_SZ /d "shell32.dll,-28" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\ShutDown\command" /ve /t REG_SZ /d "shutdown -s -f -t 00" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\HybridShutdown" /ve /t REG_SZ /d "Hybrid Shut down" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\HybridShutdown" /v "icon" /t REG_SZ /d "shell32.dll,-28" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\HybridShutdown\command" /ve /t REG_SZ /d "Shutdown -s -f -hybrid -t 00" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Restart" /ve /t REG_SZ /d "Restart" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Restart" /v "icon" /t REG_SZ /d "shell32.dll,-290" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Restart\command" /ve /t REG_SZ /d "shutdown -r -f -t 00" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep" /ve /t REG_SZ /d "Sleep" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep" /v "icon" /t REG_SZ /d "powercpl.dll,-514" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep\command" /ve /t REG_SZ /d "rundll32 powrprof.dll,SetSuspendState Sleep" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate" /ve /t REG_SZ /d "Hibernate" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate" /v "icon" /t REG_SZ /d "imageres.dll,-101" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate\command" /ve /t REG_SZ /d "Shutdown -h" /f >nul 2>&1
+
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\BootOptions" /ve /t REG_SZ /d "Restart SafeBoot Options" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\BootOptions" /v "icon" /t REG_SZ /d "RelPost" /f >nul 2>&1
+Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\BootOptions\command" /ve /t REG_SZ /d "Shutdown -r -o -f -t 00" /f >nul 2>&1
+
+:: Disable-Lockscreen
+Ren Microsoft.LockApp_cw5n1h2txyewy Microsoft.LockApp_cw5n1h2txyewy.backup >nul 2>&1
+
+:: Install Fira-Fonts
+@powershell -noni -nol -nop -w hidden -ex bypass -file "C:\Assets\Fonts\installfonts.ps1" >nul 2>&1
 
 :: Cleanup Taskbar
 powershell -noni -nol -nop -ex bypass -file "C:\Assets\Scripts\UnpinTaskbar.ps1" >nul 2>&1

@@ -10,6 +10,12 @@ reg load HKU\DefaultUser "C:\Users\Default\ntuser.dat" >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v StartupPage /d 1 /t REG_DWORD /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v AllItemsIconView /d 2 /t REG_DWORD /f >NUL 2>&1
 
+:: Scroll Wheel-Mouse a bit faster
+reg add "HKU\DefaultUser\Control Panel\Desktop" /v WheelScrollLines /d 11 /t REG_SZ /f >NUL 2>&1
+
+:: Behebt ein Problem, das zu einer hohen CPU-Auslastung führen kann, wenn viele Fenster geöffnet sind und der Task-Manager einen regelmäßigen Hintergrundscan durchführt. Darüber hinaus reagiert der Desktop möglicherweise nicht mehr. 
+reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\BamThrottling" /v DisableWindowHinting /d 1 /t REG_DWORD /f >NUL 2>&1
+
 :: Show Computer icon on the desktop
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" /v "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v LaunchTo /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -87,6 +93,8 @@ REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDelive
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement" /v ScoobeSystemSettingEnabled  /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v ShowStartupPanel /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v ShowGameModeNotifications /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v AutoGameModeEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\AdblockPlus" /v suppress_first_run_page /t REG_SZ /d "true" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Internet Explorer\MINIE" /v ShowStatusBar /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Do not show the "New App Installed" indicator - Prevent "how do you want to open this file"
@@ -132,6 +140,7 @@ reg add "HKU\DefaultUser\Control Panel\Desktop" /v WallPaper /t REG_SZ /d "C:\Wi
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v InitialKeyboardIndicators /t REG_SZ /d "2147483650" /f >NUL 2>&1
 reg add "HKU\DefaultUser\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f >nul 2>&1
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f >nul 2>&1
+reg add "HKU\DefaultUser\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f >nul 2>&1
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >nul 2>&1
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f >nul 2>&1
 
@@ -142,7 +151,7 @@ REG ADD "HKU\DefaultUser\Control Panel\Desktop" /v "UserPreferencesMask" /d "9E1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisablePreviewDesktop" /d 0 /t REG_DWORD /f >NUL 2>&1
 :: Disable Animate windows when minimizing and maximizing
 :: https://www.tenforums.com/tutorials/126788-enable-disable-animate-windows-when-minimizing-maximizing.html
-REG ADD "HKU\DefaultUser\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /d 0 /t REG_SZ /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\Control Panel\Desktop\WindowMetrics" /v MinAnimate /d 0 /t REG_SZ /f >NUL 2>&1
 :: Enable Font Smoothing
 :: https://www.tenforums.com/tutorials/126775-enable-disable-font-smoothing-windows.html
 REG ADD "HKU\DefaultUser\Control Panel\Desktop" /v "FontSmoothing" /d 2 /t REG_SZ /f >NUL 2>&1
@@ -152,7 +161,7 @@ REG ADD "HKU\DefaultUser\Control Panel\Desktop" /v "DragFullWindows" /d 0 /t REG
 ::Disable - Show thumbnails instead of icons( Advanced system settings - performance - settngs )
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "IconsOnly" /d 1 /t REG_DWORD /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /d 0 /t REG_DWORD /f >NUL 2>&1
-
+REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowInfoTip" /d 1 /t REG_DWORD /f >NUL 2>&1
 :: Hide Taskbar search / 1 - Show search icon / 2 - Show search box
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /v CortanaConsent /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -179,7 +188,9 @@ reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Extra
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_ALLOW_NOTIFICATION_SOUND" /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_SUPRESS_TOASTS_WHILE_DUPLICATING" /t REG_DWORD /d "0" /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_TOASTS_ENABLED" /t REG_DWORD /d "0" /f >NUL 2>&1
-
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_ALLOW_TOASTS_ABOVE_LOCK" /t REG_DWORD /d "0" /f >NUL 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v "NOC_GLOBAL_SETTING_ALLOW_CRITICAL_TOASTS_ABOVE_LOCK" /t REG_DWORD /d "0" /f >NUL 2>&1
+:: Disable 3D objects folder in explorer
 reg delete HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A} /f >NUL 2>&1
 
 :: Hardening
@@ -194,6 +205,7 @@ reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explo
 reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoLowDiskSpaceChecks /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoSearchInternetInStartMenu /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoAutoTrayNotify /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoReadingPane /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Turn off User Tracking - Recent Run
 :: reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoInstrumentation /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v TurnOffSPIAnimations /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -233,6 +245,12 @@ reg add HKU\DefaultUser\SOFTWARE\Microsoft\Input\TIPC /v "Enabled" /t REG_DWORD 
 :: https://docs.microsoft.com/en-us/deployoffice/compat/manage-the-privacy-of-data-monitored-by-telemetry-in-office
 reg add HKU\DefaultUser\SOFTWARE\Policies\Microsoft\Office\16.0\Common /v NoHelpItemSendFeedback /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Policies\Microsoft\Office\16.0\Common\General /v DisableBootToOfficeStart /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add HKU\DefaultUser\SOFTWARE\Microsoft\Office\Common\WhatsNew /v SuppressForAutomation /t REG_DWORD /d 1 /f >NUL 2>&1
+
+:: Disable Simplified Outlook Account Creation Outlook 2019
+reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Setup" /v "DisableOffice365SimplifiedAccountCreation" /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\QueryBuilder" /f >NUL 2>&1
+
 :: Disables online Fax services
 reg add HKU\DefaultUser\SOFTWARE\Policies\Microsoft\Office\16.0\Common\services\fax /v nofax /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Disable data collection for the agent - https://github.com/MicrosoftDocs/OfficeDocs-DeployOffice/blob/live/DeployOffice/compat/manage-the-privacy-of-data-monitored-by-telemetry-in-office.md
@@ -276,7 +294,10 @@ reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Internet Sett
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "CertificateRevocation" /t REG_DWORD /d "0" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "PreventIgnoreCertErrors" /t REG_DWORD /d "1" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "DisablePasswordCaching" /t REG_DWORD /d "1" /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "EnableHTTP2" /t REG_DWORD /d "1" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Internet Explorer\Download" /v "CheckExeSignatures" /t REG_SZ /d "no" /f >NUL 2>&1
+:: Blockieren von ActiveX-Steuerelementen
+REG ADD "HKU\DefaultUser\Software\Microsoft\Internet Explorer\VersionManager" /v "DownloadVersionList" /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\WinTrust\Trust Providers\Software Publishing" /v "State" /t REG_DWORD /d "146944" /F >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Internet Explorer\Main" /v "Start Page" /t REG_SZ /d "about:blank" /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Microsoft\Internet Explorer\Main" /v "Default_Page_URL" /t REG_SZ /d "about:blank" /f >NUL 2>&1
@@ -315,6 +336,7 @@ reg add "HKU\DefaultUser\Software\Classes\Local Settings\Software\Microsoft\Wind
 reg add "HKU\DefaultUser\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Main /v "DisallowDefaultBrowserPrompt" /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Main /v "LastFirstRunVersionDelivered" /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKU\DefaultUser\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Main /v "EnableCortana" /t REG_DWORD /d 0 /f >NUL 2>&1
+Reg add "HKU\DefaultUser\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Addons" /v "FlashPlayerEnabled" /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Add Google as search provider for IE11, and make it the default
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Internet Explorer\SearchScopes\{89418666-DF74-4CAC-A2BD-B69FB4A0228A}" /f  > nul 2>&1
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Internet Explorer\SearchScopes\{89418666-DF74-4CAC-A2BD-B69FB4A0228A}" /v "DisplayName" /t REG_SZ /d "Google" /f > nul 2>&1
@@ -506,7 +528,10 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notif
 reg delete "HKU\DefaultUser\AppEvents\Schemes\Apps" /f >NUL 2>&1
 
 :: Disable "Restore previous folder windows at logon" 
-REG delete "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "PersistBrowsers" /f /f >NUL 2>&1
+REG delete "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "PersistBrowsers" /f >NUL 2>&1
+
+:: Disable PowerShell on WinX
+reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v DontUsePowerShellOnWinX /t REG_DWORD /d 1 /f >NUL 2>&1
 
 :: Taskmanager Tab Performance
 reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\TaskManager" /v StartUpTab /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -560,7 +585,7 @@ REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Adva
 ::Disable creation of Thumbs.db thumbnail cache files
 :: IF these keys are left in the registry regardless of the values, windows display thunbnail view will not work
 :: Thumbs cache is located here -> C:\Users\%username%\AppData\Local\Microsoft\Windows\Explorer
-REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DisableThumbnails" /d "1" /t REG_DWORD /f >nul 2>&1 
+:: REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DisableThumbnails" /d "1" /t REG_DWORD /f >nul 2>&1 
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DisableThumbnailsOnNetworkFolders" /d "1" /t REG_DWORD /f >nul 2>&1 
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "ClearRecentProgForNewUserInStartMenu" /d "1" /t REG_DWORD /f >nul 2>&1 
 
@@ -652,6 +677,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v
 :: Such- und Websitevorschläge mit den eingegebenen Zeichen anzeigen
 :: reg add HKLM\SOFTWARE\Policies\Microsoft\Edge\Recommended /v SearchSuggestEnabled /d 0 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v AlwaysOpenPdfExternally /d 1 /t REG_DWORD /f >NUL 2>&1
+reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v AutofillCreditCardEnabled /d 0 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v ForceGoogleSafeSearch /d 1 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v WPADQuickCheckEnabled /d 1 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v SpellcheckEnabled /d 0 /t REG_DWORD /f >NUL 2>&1
@@ -678,14 +704,18 @@ reg add HKLM\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist /v 3 /d 
 
 :: Google Chrome Extensions
 :: Ublock Origin Chrome
-reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist  /v 1 /d "cjpalhdlnbpafiamejdnhcphjbkeiagm" /t REG_SZ /f >NUL 2>&1
+reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist /v 1 /d "cjpalhdlnbpafiamejdnhcphjbkeiagm" /t REG_SZ /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome\3rdparty\extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy" /v adminSettings /t REG_SZ /d "{\"userSettings\":{\"advancedUserEnabled\":true,\"alwaysDetachLogger\":true,\"autoUpdate\":true,\"cloudStorageEnabled\":false,\"collapseBlocked\":true,\"colorBlindFriendly\":false,\"contextMenuEnabled\":true,\"dynamicFilteringEnabled\":false,\"externalLists\":\"\",\"firewallPaneMinimized\":true,\"hyperlinkAuditingDisabled\":true,\"ignoreGenericCosmeticFilters\":false,\"largeMediaSize\":50,\"parseAllABPHideFilters\":true,\"popupPanelSections\":31,\"prefetchingDisabled\":true,\"requestLogMaxEntries\":1000,\"showIconBadge\":true,\"tooltipsDisabled\":true,\"webrtcIPAddressHidden\":true},\"selectedFilterLists\":[\"user-filters\",\"ublock-filters\",\"ublock-badware\",\"ublock-privacy\",\"ublock-abuse\",\"ublock-unbreak\",\"adguard-generic\",\"adguard-mobile\",\"easylist\",\"adguard-spyware\",\"easyprivacy\",\"fanboy-enhanced\",\"urlhaus-1\",\"spam404-0\",\"adguard-annoyance\",\"adguard-social\",\"fanboy-thirdparty_social\",\"fanboy-cookiemonster\",\"fanboy-annoyance\",\"fanboy-social\",\"ublock-annoyances\",\"dpollock-0\",\"mvps-0\",\"plowe-0\",\"DEU-0\",\"RUS-0\"],\"hiddenSettings\":{},\"whitelist\":[\"about-scheme\",\"chrome-scheme\",\"edge-scheme\",\"moz-extension-scheme\",\"opera-scheme\",\"vivaldi-scheme\",\"wyciwyg-scheme\"],\"netWhitelist\":\"about-scheme\\nchrome-scheme\\nedge-scheme\\nmoz-extension-scheme\\nopera-scheme\\nvivaldi-scheme\\nwyciwyg-scheme\",\"dynamicFilteringString\":\"\",\"urlFilteringString\":\"\",\"hostnameSwitchesString\":\"\",\"userFilters\":\"youtube.com##+js(set, ytInitialPlayerResponse.adPlacements, undefined)\nyoutube.com##+js(json-prune, [].playerResponse.adPlacements [].playerResponse.playerAds playerResponse.adPlacements playerResponse.playerAds adPlacements playerAds)\n\"}" /f >NUL 2>&1
 :: Privacy Badger Chrome
-reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist  /v 2 /d "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" /t REG_SZ /f >NUL 2>&1
+reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist /v 2 /d "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" /t REG_SZ /f >NUL 2>&1
 :: Bitwarden Password-Manager Chrome
-reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist  /v 3 /d "nngceckbapebfimnlniiiahkandclblb" /t REG_SZ /f >NUL 2>&1
+reg add HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist /v 3 /d "nngceckbapebfimnlniiiahkandclblb" /t REG_SZ /f >NUL 2>&1
 :: Block Browser-Extension Adobe Plugin
 :: reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallBlocklist" /v "1" /d "efaidnbmnnnibpcajpcglclefindmkaj" /f >NUL 2>&1
+
+:: Set up the enrollment token for organizational unit: Alexander Scharmer
+reg add HKLM\SOFTWARE\Policies\Google\Chrome /v "CloudManagementEnrollmentToken" /d "3d531068-7119-4f51-af62-177725ed4067" /t REG_SZ /f >NUL 2>&1
+
 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\msedge.exe" /V UseLargePages /t REG_DWORD /d "00000001" /f > NUL 2>&1
 reg add "HKLM\Software\Policies\Microsoft\Windows NT\Printers" /v DisableHTTPPrinting /d 1 /t REG_DWORD /f >NUL 2>&1
@@ -805,6 +835,7 @@ reg add "HKLM\Software\Policies\Microsoft\MicrosoftEdge\Internet Settings" /v Ne
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main" /v PreventFirstRunPage  /t REG_DWORD /d 1 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main" /v PreventLiveTileDataCollection  /t REG_DWORD /d 1 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main" /v AllowPrelaunch /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main" /v "FormSuggest Passwords" /t REG_SZ /d "no" /f >NUL 2>&1
 :: 18.9.45.13 (L2) Ensure 'Prevent using Localhost IP address for WebRTC' is set to 'Enabled'
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main" /v HideLocalHostIP /t REG_DWORD /d 1 /f >NUL 2>&1
 :: REG ADD "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\TabPreloader" /v AllowTabPreloading /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -877,11 +908,14 @@ REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v "Start" /t REG_DWO
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v "Start" /t REG_DWORD /d 4 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d 4 /f > nul 2>&1
 :: https://docs.microsoft.com/en-us/windows-server/administration/performance-tuning/role/file-server/
+:: https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds_vdi-recommendations-1909
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DisableBandwidthThrottling" /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "FileInfoCacheEntriesMax" /t REG_DWORD /d 32768 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DirectoryCacheEntriesMax" /t REG_DWORD /d 4096 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "FileNotFoundCacheEntriesMax" /t REG_DWORD /d 32768 /f > nul 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DormantFileLimit" /t REG_DWORD /d 256 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "MaxCmds" /t REG_DWORD /d 32768 /f > nul 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "RequireSecuritySignature" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v DisableLeasing /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Lanmanserver\Parameters" /v "Hidden" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v RestrictNullSessAccess /t REG_DWORD /d 1 /f > nul 2>&1
@@ -891,6 +925,9 @@ reg ADD "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v EnableICMPR
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "SynAttackProtect" /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "QualifyingDestinationThreshold" /t REG_DWORD /d 3 /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "Tcp1323Opts" /t REG_DWORD /d 1 /f > nul 2>&1
+:: MSS: (EnableDeadGWDetect) Allow automatic detection of dead network gateways (could lead to DoS)" setting to "Disabled"
+:: https://www.stigviewer.com/stig/windows_2003_member_server/2015-06-03/finding/V-4109
+REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "EnableDeadGWDetect" /t REG_DWORD /d 0 /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "MaxUserPort" /t REG_DWORD /d 0000fffe /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "KeepAliveTime" /t REG_DWORD /d 006ddd00 /f > nul 2>&1
 REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\Parameters" /v "EnableConnectionRateLimiting" /t REG_DWORD /d 0 /f > nul 2>&1
@@ -1002,7 +1039,8 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "N
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRemoteChangeNotify" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRemoteRecursiveEvents" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "StartRunNoHOMEPATH" /t REG_DWORD /d 1 /f > nul 2>&1
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "UseDesktopIniCache" /t REG_DWORD /d 1 /f > nul 2>&1
+:: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "UseDesktopIniCache" /t REG_DWORD /d 0 /f > nul 2>&1
+:: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "UseDesktopIniCache" /t REG_DWORD /d 0 /f /reg:64 > nul 2>&1
 :: Fix Slow-Loading Windows Icons by Increasing the Icon Cache
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "Max Cached Icons" /t REG_SZ /d 16384 /f > NUL 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update\ExcludeWUDriversInQualityUpdates" /v "Value" /t REG_DWORD /d 0 /f > NUL 2>&1
@@ -1024,6 +1062,8 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Feed Discovery" /v "
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Infodelivery\Restrictions" /v "NoUpdateCheck" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Infodelivery\Restrictions" /v "NoSplash" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer" /v "DisableFlashInIE" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Main Criteria" /v "Use FormSuggest" /t REG_SZ /d "no" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Internet Explorer\Main Criteria" /v "FormSuggest PW Ask" /t REG_SZ /d "no" /f > nul 2>&1
 :: 18.9.48.2 (L2) Ensure 'Allow Adobe Flash' is set to 'Disabled'
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Addons" /v "FlashPlayerEnabled" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\BooksLibrary" /v "AllowConfigurationUpdateForBooksLibrary" /t REG_DWORD /d 0 /f > nul 2>&1
@@ -1057,8 +1097,8 @@ reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\Messaging /v AllowMessageSync /
 
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Speech" /v AllowSpeechModelUpdate /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Disable thumbnail cache removal
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f >NUL 2>&1
+:: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f >NUL 2>&1
+:: reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v UseDefaultTile /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Disable Network Location Wizard prompts
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff" /f >NUL 2>&1
@@ -1097,42 +1137,44 @@ reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "!Install_Te
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "!Install_Chrome" /t REG_SZ /d "C:\Assets\Chrome\install.cmd" /f >NUL 2>&1
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "!Install_RegKiss" /t REG_SZ /d "cmd /c reg add \"HKCU\Control Panel\Desktop\WindowMetrics\" /v MinAnimate /t REG_SZ /d 0 /f" /f >NUL 2>&1
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "!Install_Cleanup" /t REG_SZ /d "C:\Assets\Scripts\cleanup.cmd" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}" /f /reg:32 >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}" /f /reg:32 >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{45ea75a0-a269-11d1-b5bf-0000f8051515}" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{45ea75a0-a269-11d1-b5bf-0000f8051515}" /f /reg:32 >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{3af36230-a269-11d1-b5bf-0000f8051515}" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{3af36230-a269-11d1-b5bf-0000f8051515}" /f /reg:32 >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{630b1da0-b465-11d1-9948-00c04f98bbc9}" /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{630b1da0-b465-11d1-9948-00c04f98bbc9}" /f /reg:32 >NUL 2>&1
-:: Remove DOTNETFRAMEWORKS setup from Personalized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}" /v StubPath /f /reg:32 >NUL 2>&1
-:: Remove Microsoft Internet Explorer ClearIconCache setup from Personlized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2D46B6DC-2207-486B-B523-A557E6D54B47}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2D46B6DC-2207-486B-B523-A557E6D54B47}" /v StubPath /f /reg:32 >NUL 2>&1
-:: Remove Microsoft Internet Explorer Initializer setup from Personalized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}" /v StubPath /f /reg:32 >NUL 2>&1
-:: Remove Microsoft Outlook MailNews Express setup from Personalized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{44BBA840-CC51-11CF-AAFA-00AA00B6015C}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{44BBA840-CC51-11CF-AAFA-00AA00B6015C}" /v StubPath /f /reg:32 >NUL 2>&1
-:: Remove Themes setup from Personlized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2C7339CF-2B09-4501-B3F3-F3508C9228ED}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2C7339CF-2B09-4501-B3F3-F3508C9228ED}" /v StubPath /f /reg:32 >NUL 2>&1
-:: Remove Windows Desktop Update setup from Personalized Settings. Optimize this item will shorten new user first login time.
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4340}" /v StubPath /f >NUL 2>&1
-reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4340}" /v StubPath /f /reg:32 >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}" /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{22d6f312-b0f6-11d0-94ab-0080c74c7e95}" /f /reg:32 >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}" /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{6BF52A52-394A-11d3-B153-00C04F79FAA6}" /f /reg:32 >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{45ea75a0-a269-11d1-b5bf-0000f8051515}" /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{45ea75a0-a269-11d1-b5bf-0000f8051515}" /f /reg:32 >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{3af36230-a269-11d1-b5bf-0000f8051515}" /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{3af36230-a269-11d1-b5bf-0000f8051515}" /f /reg:32 >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{630b1da0-b465-11d1-9948-00c04f98bbc9}" /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{630b1da0-b465-11d1-9948-00c04f98bbc9}" /f /reg:32 >NUL 2>&1
+:: :: Remove DOTNETFRAMEWORKS setup from Personalized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89B4C1CD-B018-4511-B0A1-5476DBF70820}" /v StubPath /f /reg:32 >NUL 2>&1
+:: :: Remove Microsoft Internet Explorer ClearIconCache setup from Personlized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2D46B6DC-2207-486B-B523-A557E6D54B47}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2D46B6DC-2207-486B-B523-A557E6D54B47}" /v StubPath /f /reg:32 >NUL 2>&1
+:: :: Remove Microsoft Internet Explorer Initializer setup from Personalized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}" /v StubPath /f /reg:32 >NUL 2>&1
+:: :: Remove Microsoft Outlook MailNews Express setup from Personalized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{44BBA840-CC51-11CF-AAFA-00AA00B6015C}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{44BBA840-CC51-11CF-AAFA-00AA00B6015C}" /v StubPath /f /reg:32 >NUL 2>&1
+:: :: Remove Themes setup from Personlized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2C7339CF-2B09-4501-B3F3-F3508C9228ED}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{2C7339CF-2B09-4501-B3F3-F3508C9228ED}" /v StubPath /f /reg:32 >NUL 2>&1
+:: :: Remove Windows Desktop Update setup from Personalized Settings. Optimize this item will shorten new user first login time.
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4340}" /v StubPath /f >NUL 2>&1
+:: reg delete "HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4340}" /v StubPath /f /reg:32 >NUL 2>&1
 :: Google Chrome Hardening
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v DnsOverHttpsMode /t REG_SZ /d "automatic" /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v BackgroundModeEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v AudioSandboxEnabled /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v AudioCaptureAllowed /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ImportSavedPasswords /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v MetricsReportingEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v SitePerProcess /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ChromeCleanupEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ChromeCleanupReportingEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ChromeCleanupReportingEnabled /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v MetricsReportingEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v AdsSettingForIntrusiveAdsSites /t REG_DWORD /d 2 /f >NUL 2>&1
 :: reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v BuiltInDnsClientEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -1157,22 +1199,23 @@ reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v PromotionalTabsEnabled /t REG_
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v AllowDeletingBrowserHistory /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v PrintPreviewUseSystemDefaultPrinter /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v AbusiveExperienceInterventionEnforce /t REG_DWORD /d 1 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v SafeBrowsingEnabled /t REG_DWORD /d 1 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v DefaultCookiesSetting /t REG_DWORD /d 4 /f >NUL 2>&1
+:: reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v DefaultCookiesSetting /t REG_DWORD /d 4 /f >NUL 2>&1
 :: reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ForceEphemeralProfiles /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v DefaultBrowserSettingEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ProxyServerMode /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v ForceGoogleSafeSearch /t REG_DWORD /d 1 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v SSLVersionMin /t REG_SZrvirr /d "tls1" /f >NUL 2>&1
+:: reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v SSLVersionMin /t REG_SZ /d "tls1" /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome" /v BookmarkBarEnabled /t REG_DWORD /d 1 /f >NUL 2>&1
+
 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\chrome.exe" /V UseLargePages /t REG_DWORD /d "00000001" /f > NUL 2>&1
 REG add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\software_reporter_tool.exe" /v Debugger /t REG_SZ /d "C:\Windows\System32\taskkill.exe" /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Mozilla\Firefox" /v DisableTelemetry /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Mozilla\Firefox" /v DisableDefaultBrowserAgent /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Nvidia Fix for Low Latency (if it is not showing up in nvcp):
-REG ADD "HKLM\\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID73779  /t REG_DWORD /d 1 /f >NUL 2>&1
-REG ADD "HKLM\\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID73780  /t REG_DWORD /d 1 /f >NUL 2>&1
-REG ADD "HKLM\\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID74361  /t REG_DWORD /d 1 /f >NUL 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID73779  /t REG_DWORD /d 1 /f >NUL 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID73780  /t REG_DWORD /d 1 /f >NUL 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v EnableRID74361  /t REG_DWORD /d 1 /f >NUL 2>&1
 
 REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v EnableRID44231  /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v EnableRID64640  /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -1204,7 +1247,7 @@ reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Print" /v "PortThreadPriority" /d
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Print" /v "NetPrinterDecayPeriode" /d 600000 /t REG_DWORD /f >NUL 2>&1
 :: Disable Timeline
 :: REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableActivityFeed" /d "0" /t REG_DWORD /f >NUL 2>&1
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /d "1" /t REG_DWORD /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /d "0" /t REG_DWORD /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /d "0" /t REG_DWORD /f >NUL 2>&1
 :: Local users on domain-joined computers must not be enumerated - https://www.stigviewer.com/stig/windows_8/2013-10-01/finding/V-36684
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnumerateLocalUsers" /d "0" /t REG_DWORD /f >NUL 2>&1
@@ -1659,6 +1702,42 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v DisableCo
 
 :: DisableErrorReporting
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\WerSvc" /v Start /d 4 /t REG_DWORD /f >NUL 2>&1
+
+:: Show all Devices in Device Manager
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v DEVMGR_SHOW_DETAILS /t REG_DWORD /d 1 /f >NUL 2>&1
+
+:: China-Versionen von Windows 10 um Datenverkehr zu verhindern -  https://docs.microsoft.com/de-de/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services#konfigurieren-der-einzelnen-einstellungenhow-to-configure-each-setting
+reg add "HKLM\Software\Microsoft\LexiconUpdate\loc_0804" /v HapDownloadEnabled  /t REG_DWORD /d 0 /f >NUL 2>&1
+
+:: App-Diagnose deaktivieren
+reg add "HKLM\Software\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsGetDiagnosticInfo" /t REG_DWORD /d 2 /f > nul 2>&1
+:: Apps im Hintergrund deaktivieren
+reg add "HKLM\Software\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsRunInBackground" /t REG_DWORD /d 2 /f > nul 2>&1
+:: Windows 10 must be configured to prevent Windows apps from being activated by voice while the system is locked.
+reg add "HKLM\Software\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsActivateWithVoice" /t REG_DWORD /d 2 /f > nul 2>&1
+
+:: extra ciphers and the ability to connect to VPNs behind a NAT
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PolicyAgent" /v "AssumeUDPEncapsulationContextOnSendRule" /t REG_DWORD /d 2 /f >NUL 2>&1
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RasMan\Parameters" /v "DisableIKENameEkuCheck" /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RasMan\Parameters" /v "NegotiateDH2048_AES256" /t REG_DWORD /d 2 /f >NUL 2>&1
+
+:: Re-enable the option to login without password in "control userpasswords2" or netplwiz
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device" /v DevicePasswordLessBuildVersion /d 0 /t REG_DWORD /f >NUL 2>&1
+
+:: Prevent (remote) DLL Hijacking
+:: Sources:
+:: https://www.greyhathacker.net/?p=235
+:: https://www.verifyit.nl/wp/?p=175464
+:: https://support.microsoft.com/en-us/help/2264107/a-new-cwdillegalindllsearch-registry-entry-is-available-to-control-the
+:: The value data can be 0x1, 0x2 or 0xFFFFFFFF. If the value name CWDIllegalInDllSearch does not exist or the value data is 0 then the machine will still be vulnerable to attack.
+:: Please be aware that the value 0xFFFFFFFF could break certain applications (also blocks dll loading from USB).
+:: Blocks a DLL Load from the current working directory if the current working directory is set to a WebDAV folder  (set it to 0x1)
+:: Blocks a DLL Load from the current working directory if the current working directory is set to a remote folder (such as a WebDAV or UNC location) (set it to 0x2)
+:: ---------------------
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v CWDIllegalInDllSearch /t REG_DWORD /d 0x2 /f >NUL 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v SafeDLLSearchMode /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v ProtectionMode /t REG_DWORD /d 1 /f >NUL 2>&1
+
 
 powercfg.exe -s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >NUL 2>&1
 powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 >NUL 2>&1
