@@ -14,7 +14,7 @@ Bei den umgesetzten Richtlinien zur Härtung orientiert sich *Windows Unity* unt
 // Möglicherweise werden auch Sie **Windows Unity** beim täglichen Einsatz so lieben wie wir :cupid: //
 ## Abbildung Taskmanager in WINUNITY im IDLE-Modus
 ![WinUnity-IDLEMode](https://user-images.githubusercontent.com/25721869/109490000-ea006480-7a87-11eb-9479-0e4b6ef55fd5.png)
-## ## Abbildung Taskmanager einer Windows 10 Standardinstallation im IDLE-Modus
+## Abbildung Taskmanager einer Windows 10 Standardinstallation im IDLE-Modus
 ![WindowsStandard-IDLEMode](https://user-images.githubusercontent.com/25721869/109490020-f08edc00-7a87-11eb-9ec8-751b8711f413.png)
 
 ## Anmeldedaten Standardbenutzerkonto
