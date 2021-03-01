@@ -1,5 +1,3 @@
-![WinUnity-IDLEMode](https://user-images.githubusercontent.com/25721869/109490000-ea006480-7a87-11eb-9479-0e4b6ef55fd5.png)
-![WindowsStandard-IDLEMode](https://user-images.githubusercontent.com/25721869/109490020-f08edc00-7a87-11eb-9ec8-751b8711f413.png)
 # WindowsUnity
 Die Komposition aus dem Betriebssystem Windows 10 und den **WindowsUnity-Richtliniensatz** verfolgt mehrere Ziele:
 - [x] Neben der rascheren **unbeaufsichtigten Desktop-Bereitstellung** die [**Härtung**](https://de.wikipedia.org/wiki/H%C3%A4rten_(Computer)) / [**Systemhärtung**](https://www.fb-pro.com/was-ist-systemhaertung-welche-massnahmen-gibt-es/) des Betriebssystems und seiner Anwendungen gegenüber typischen Angriffsvektoren auszuliefern, 
@@ -14,6 +12,10 @@ Bei den umgesetzten Richtlinien zur Härtung orientiert sich *Windows Unity* unt
 - https://www.cisecurity.org/benchmark/microsoft_windows_desktop/
 
 // Möglicherweise werden auch Sie **Windows Unity** beim täglichen Einsatz so lieben wie wir :cupid: //
+## Abbildung Taskmanager in WINUNITY im IDLE-Modus
+![WinUnity-IDLEMode](https://user-images.githubusercontent.com/25721869/109490000-ea006480-7a87-11eb-9479-0e4b6ef55fd5.png)
+## ## Abbildung Taskmanager einer Windows 10 Standardinstallation im IDLE-Modus
+![WindowsStandard-IDLEMode](https://user-images.githubusercontent.com/25721869/109490020-f08edc00-7a87-11eb-9ec8-751b8711f413.png)
 
 ## Anmeldedaten Standardbenutzerkonto
 Das administrative Benutzerkonto für die Anmeldung wird von der Datei [AutoUnattend.xml](https://github.com/sale1977/WindowsUnity/blob/main/AutoUnattend.xml) erstellt. Es empfiehlt sich, dass Benutzerkonto und das Passwort nach der Windows-Unity-Bereitstellung zu ändern.
