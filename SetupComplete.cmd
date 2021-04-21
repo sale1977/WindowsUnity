@@ -19,6 +19,7 @@ reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\BamT
 :: Show Computer icon on the desktop
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" /v "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v LaunchTo /t REG_DWORD /d 1 /f >NUL 2>&1
+:: Turn off "File Explorer ads"
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowSyncProviderNotifications /t REG_DWORD /d 0 /f >NUL 2>&1
 :: REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarSmallIcons /t REG_DWORD /d 1 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Start_TrackProgs /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -65,11 +66,13 @@ REG ADD "HKU\DefaultUser\Network" /v RestoreDiskChecked /t REG_DWORD /d 1 /f >NU
 
 :: Disabling Ads Suggestions
 :: Show me tips about Windows / Can cause high disc usage via a process System and compressed memory
+:: Turn off "Get tips, tricks and suggestions as you use Windows"
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SoftLandingEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v FeatureManagementEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Kill "show fun tips, hints and tricks" on the lock screen
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenOverlayEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+:: Turn off "Start Menu suggestions"
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SystemPaneSuggestionsEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Turn off "Automatic installation apps"
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v ContentDeliveryAllowed /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -95,6 +98,8 @@ REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v ShowStartupPanel /t REG_
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v ShowGameModeNotifications /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v AutoGameModeEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\GameBar" /v UseNexusForGameBarEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKU\DefaultUser\SYSTEM\CurrentControlSet\Services\xbgm" /v "Start"  /d 4 /t REG_SZ /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\AdblockPlus" /v suppress_first_run_page /t REG_SZ /d "true" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Software\Microsoft\Internet Explorer\MINIE" /v ShowStatusBar /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Do not show the "New App Installed" indicator - Prevent "how do you want to open this file"
@@ -122,7 +127,7 @@ reg add "HKU\DefaultUser\Control Panel\Mouse" /v SmoothMouseXCurve /t REG_BINARY
 reg add "HKU\DefaultUser\Control Panel\International\User Profile" /v HttpAcceptLanguageOptOut /t REG_SZ /d 1 /f >NUL 2>&1
 :: Determines how long the System waits for user processes to end after the user attempts to log off or to shut down
 reg add "HKU\DefaultUser\Control Panel\Desktop" /v WaitToKillAppTimeOut /t REG_SZ /d 2000 /f >NUL 2>&1
-reg add "HKU\DefaultUser\Control Panel\Desktop" /v HungAppTimeout  /t REG_SZ /d 2000 /f >NUL 2>&1
+reg add "HKU\DefaultUser\Control Panel\Desktop" /v HungAppTimeout  /t REG_SZ /d 1000 /f >NUL 2>&1
 :: Determines whether user processes end automatically when the user either logs off or shuts down / 1 - Processes end automatically
 reg add "HKU\DefaultUser\Control Panel\Desktop" /v AutoEndTasks  /t REG_SZ /d 1 /f >NUL 2>&1
 reg add "HKU\DefaultUser\Control Panel\Desktop" /v LowLevelHooksTimeout  /t REG_SZ /d 1000 /f >NUL 2>&1
@@ -143,6 +148,9 @@ reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "InitialKeyboardInd
 reg add "HKU\DefaultUser\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t REG_SZ /d "2" /f >nul 2>&1
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >nul 2>&1
 reg add "HKU\DefaultUser\.DEFAULT\Control Panel\Keyboard" /v "KeyboardSpeed" /t REG_SZ /d "31" /f >nul 2>&1
+
+:: (CIS-1909): 19.1.3.2 (L1) Ensure 'Force specific screen saver: Screen saver executable name' is set to 'Enabled: scrnsave.scr'
+reg add "HKU\DefaultUser\Control Panel\Desktop" /v SCRNSAVE.EXE /t REG_SZ /d "scrnsave.scr" /f >NUL 2>&1
 
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects /v VisualFXSetting /t REG_DWORD /d 3 /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\Control Panel\Desktop" /v "UserPreferencesMask" /d "9E1E078012000000" /t REG_BINARY /f >NUL 2>&1
@@ -168,6 +176,7 @@ reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Search /v Cort
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v DesktopLivePreviewHoverTime /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v ShowEncryptCompressedColor /t REG_DWORD /d 1 /f >NUL 2>&1
 :: Do not hide extensions for known file types
+reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v Hidden /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v HideFileExt /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v NavPaneExpandToCurrentFolder /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v EncryptionContextMenu /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -268,6 +277,7 @@ reg add HKU\DefaultUser\Software\Microsoft\Office\16.0\Common\ClientTelemetry /v
 reg add HKU\DefaultUser\Software\Microsoft\Office\16.0\Common\ClientTelemetry /v VerboseLogging /t REG_DWORD /d 0 /f >NUL 2>&1
 
 reg add HKU\DefaultUser\System\GameConfigStore /v "GameDVR_Enabled" /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add HKU\DefaultUser\System\GameConfigStore /v "GameDVR_FSEBehavior" /t REG_DWORD /d 2 /f >NUL 2>&1
 reg add HKU\DefaultUser\System\GameConfigStore /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d 2 /f >NUL 2>&1
 reg add HKU\DefaultUser\System\GameConfigStore /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add HKU\DefaultUser\System\GameConfigStore /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -293,7 +303,9 @@ reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Internet Sett
 :: 0 = Der Internet Explorer überprüft nicht, ob Serverzertifikate gesperrt wurden.
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "CertificateRevocation" /t REG_DWORD /d "0" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "PreventIgnoreCertErrors" /t REG_DWORD /d "1" /f >NUL 2>&1
+:: IE - Disable Password Caching [Disable Remember Password]
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "DisablePasswordCaching" /t REG_DWORD /d "1" /f >NUL 2>&1
+:: General - Force enable HTTP/2 in Internet Explorer.
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings" /v "EnableHTTP2" /t REG_DWORD /d "1" /f >NUL 2>&1
 REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Internet Explorer\Download" /v "CheckExeSignatures" /t REG_SZ /d "no" /f >NUL 2>&1
 :: Blockieren von ActiveX-Steuerelementen
@@ -434,12 +446,15 @@ reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" /v 
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" /v PlaySound /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" /v ShowEnvelope /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" /v CtrlEnterSends /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" /v ChangePointer /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Disable Office OLE - https://adsecurity.org/?p=3299
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Security" /v ShowOLEPackageObj /t REG_DWORD /d 0 /f >NUL 2>&1
 :: Disable Microsoft Office Telemetry
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Mail" /v EnableLogging /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Calendar" /v EnableCalendarLogging /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Office\16.0\Word\Options" /v EnableLogging /t REG_DWORD /d 0 /f >NUL 2>&1
+:: An Office program is slow or may stop responding (hang) when you open a file from a network location - https://docs.microsoft.com/en-us/office/troubleshoot/performance/office-slow-or-stop-responding
+reg add "HKU\DefaultUser\Software\Microsoft\Office\16.0\Common\Open Find" /v EnableShellDataCaching /t REG_DWORD /d 1 /f >NUL 2>&1
 
 :: disables reporting for all solution and application types - https://github.com/MicrosoftDocs/OfficeDocs-DeployOffice/blob/live/DeployOffice/compat/manage-the-privacy-of-data-monitored-by-telemetry-in-office.md
 reg add "HKU\DefaultUser\Software\Policies\microsoft\office\16.0\osm\preventedapplications" /v accesssolution /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -638,6 +653,123 @@ REG ADD "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSetting
 
 reg add "HKU\DefaultUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v SaveZoneInformation /t REG_DWORD /d 1 /f > NUL 2>&1
 
+:: Disable "Online Speech recognition"
+reg add "HKU\DefaultUser\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy" /v HasAccepted /t REG_DWORD /d 0 /f > NUL 2>&1
+
+:: Process Explorer Settings
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v EulaAccepted /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ProcessImageColumnWidth /t REG_DWORD /d 00000105 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowUnnamedHandles /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowDllView /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HandleSortColumn /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HandleSortDirection /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DllSortColumn /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DllSortDirection /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ProcessSortColumn /t REG_DWORD /d ffffffff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ProcessSortDirection /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightServices /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightOwnProcesses /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightRelocatedDlls /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightJobs /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightNewProc /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightDelProc /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightImmersive /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightProtected /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightPacked /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightNetProcess /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightSuspend /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HighlightDuration /t REG_DWORD /d 000003e8 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowCpuFractions /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowLowerpane /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowAllUsers /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowProcessTree /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v SymbolWarningShown /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HideWhenMinimized /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v AlwaysOntop /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v OneInstance /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v NumColumnSets /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ConfirmKill /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v RefreshRate /t REG_DWORD /d 00001388 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v PrcessColumnCount /t REG_DWORD /d 00000012 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DllColumnCount /t REG_DWORD /d 00000005 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v HandleColumnCount /t REG_DWORD /d 00000002 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DefaultProcPropPage /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DefaultSysInfoPage /t REG_DWORD /d 4 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v DefaultDllPropPage /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorPacked /t REG_DWORD /d 00ff0080 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorImmersive /t REG_DWORD /d 00eaea00 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorOwn /t REG_DWORD /d 00ffd0d0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorServices /t REG_DWORD /d 00d0d0ff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorRelocatedDlls /t REG_DWORD /d 00a0ffff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorGraphBk /t REG_DWORD /d 00f0f0f0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorJobs /t REG_DWORD /d 00006cd0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorDelProc /t REG_DWORD /d 004646ff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorNewProc /t REG_DWORD /d 0046ff46 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorNet /t REG_DWORD /d 00a0ffff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ColorProtected /t REG_DWORD /d 008000ff /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowHeatmaps /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v StatusBarColumns /t REG_DWORD /d 00003515 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowAllCpus /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowAllGpus /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v GpuNodeUsageMask /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v GpuNodeUsageMask1 /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v VerifySignatures /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v VirusTotalCheck /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v VirusTotalSubmitUnknown /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v UseGoogle /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ShowNewProcesses /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v TrayCPUHistory /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v FormatIoBytes /t REG_DWORD /d 1 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v ETWstandardUserWarning /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKU\DefaultUser\SOFTWARE\Sysinternals\Process Explorer" /v VirusTotalTermsAccepted /t REG_DWORD /d 1 /f > NUL 2>&1
+
+:: Disable Visual Studio Code Telemetry
+reg add "HKU\DefaultUser\Software\Microsoft\VisualStudio\Telemetry" /v TurnOffSwitch /t REG_DWORD /d 1 /f > NUL 2>&1
+
+:: Disable all suggested apps
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "22StokedOnIt.NotebookPro_ffs55s3hze5sr" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "2FE3CB00.PicsArt-PhotoStudio_crhqpqs3x1ygc" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "41038Axilesoft.ACGMediaPlayer_wxjjre7dryqb6" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "5CB722CC.SeekersNotesMysteriesofDarkwood_ypk0bew5psyra" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "7458BE2C.WorldofTanksBlitz_x4tje2y229k00" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "828B5831.HiddenCityMysteryofShadows_ytsefhwckbdv6" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "828B5831.TheSecretSociety-HiddenMystery_ytsefhwckbdv6" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "89006A2E.AutodeskSketchBook_tf1gferkr813w" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "9E2F88E3.Twitter_wgeqdkkx372wm" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "A278AB0D.AsphaltStreetStormRacing_h6adky7gbf63m" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "A278AB0D.DisneyMagicKingdoms_h6adky7gbf63m" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "A278AB0D.DragonManiaLegends_h6adky7gbf63m" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "A278AB0D.MarchofEmpires_h6adky7gbf63m" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "AdobeSystemsIncorporated.PhotoshopElements2018_ynb6jyjzte8ga" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "CAF9E577.Plex_aam28m9va5cke" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "DolbyLaboratories.DolbyAccess_rz1tebttyb220" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Drawboard.DrawboardPDF_gqbn7fs4pywxm" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Expedia.ExpediaHotelsFlightsCarsActivities_0wbx8rnn4qk5c" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Facebook.317180B0BB486_8xx8rvfyw5nnt" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Facebook.Facebook_8xx8rvfyw5nnt" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Facebook.InstagramBeta_8xx8rvfyw5nnt" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Fitbit.FitbitCoach_6mqt6hf9g46tw" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "flaregamesGmbH.RoyalRevolt2_g0q0z3kw54rap" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "GAMELOFTSA.Asphalt8Airborne_0pp20fcewvvtj" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "king.com.BubbleWitch3Saga_kgqvnymyfvs32" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "king.com.CandyCrushSaga_kgqvnymyfvs32" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "king.com.CandyCrushSodaSaga_kgqvnymyfvs32" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.AgeCastles_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.BingNews_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.BingSports_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.BingWeather_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "microsoft.microsoftskydrive_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.MinecraftUWP_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Microsoft.MSPaint_8wekyb3d8bbwe" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "NAVER.LINEwin8_8ptj331gd3tyt" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "Nordcurrent.CookingFever_m9bz608c1b9ra" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "SiliconBendersLLC.Sketchable_r2kxzpx527qgj" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "SpotifyAB.SpotifyMusic_zpdnekdrzrea0" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "ThumbmunkeysLtd.PhototasticCollage_nfy108tqq3p12" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "USATODAY.USATODAY_wy7mw3214mat8" /t REG_DWORD /d "0" /f > nul 2>&1
+reg add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager\SuggestedApps" /v "WinZipComputing.WinZipUniversal_3ykzqggjzj4z0" /t REG_DWORD /d "0" /f > nul 2>&1
+
 :: Unload Default User registry hive
 reg unload HKU\DefaultUser
 
@@ -673,7 +805,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" /v
 :: 18.5.8.1 (L1) Ensure 'Enable insecure guest logons' is set to 'Disabled'
 reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation /v AllowInsecureGuestAuth /d 0 /t REG_DWORD /f >NUL 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v AllowInsecureGuestAuth /d 0 /t REG_DWORD /f >NUL 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v DisableLargeMtu /d 0 /t REG_DWORD /f >NUL 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v DisableLargeMtu /d 0 /t REG_DWORD /f >NUL 2>&1
 :: Such- und Websitevorschläge mit den eingegebenen Zeichen anzeigen
 :: reg add HKLM\SOFTWARE\Policies\Microsoft\Edge\Recommended /v SearchSuggestEnabled /d 0 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\Edge /v AlwaysOpenPdfExternally /d 1 /t REG_DWORD /f >NUL 2>&1
@@ -761,6 +893,7 @@ reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v UseTPM /t REG_DWORD /d 2 /f >NUL
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v UseTPMKEY /t REG_DWORD /d 2 /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v UseTPMKeyPIN /t REG_DWORD /d 2 /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v UseTPMPIN /t REG_DWORD /d 2 /f >NUL 2>&1
+:: Enable XTS-AES 256-bit BitLocker encryption for all drives
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v EncryptionMethodWithXtsOs /t REG_DWORD /d 7 /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v EncryptionMethodWithXtsFdv /t REG_DWORD /d 7 /f >NUL 2>&1
 reg add HKLM\SOFTWARE\Policies\Microsoft\FVE /v EncryptionMethodWithXtsRdv /t REG_DWORD /d 7 /f >NUL 2>&1
@@ -803,8 +936,9 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "LongPathsEnabled"
 :: This will clear credentials of logged off users after 30 seconds (mimicking the behavior of Windows 8.1+)
 :: https://support.microsoft.com/en-us/topic/microsoft-security-advisory-update-to-improve-credentials-protection-and-management-may-13-2014-93434251-04ac-b7f3-52aa-9f951c14b649
 reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v TokenLeakDetectDelaySecs /t REG_DWORD /d 30 /f >nul 2>&1
-reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v RestrictAnonymous /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v RestrictAnonymous /t REG_DWORD /d 2 /f >NUL 2>&1
 reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v RestrictAnonymousSAM  /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v TurnOffAnonymousBlock  /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v RestrictRemoteSAM /t REG_SZ /d "O:BAG:BAD:(A;;RC;;;BA)" /f >NUL 2>&1
 reg add HKLM\SYSTEM\CurrentControlSet\Control\Lsa /v LmCompatibilityLevel /t REG_DWORD /d 5 /f >NUL 2>&1
 :: Limit use of blank passwords
@@ -826,6 +960,9 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoBalloonFeatureA
 :: REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v DisableNotificationCenter  /t REG_DWORD /d 1 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Peernet" /v Disabled  /t REG_DWORD /d 1 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" /v DoReport  /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\DW" /v "DWNoSecondLevelCollection" /t REG_DWORD /d 1 /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\DW" /v "DWNoFileCollection" /t REG_DWORD /d 1 /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\DW" /v "DWNoExternalURL" /t REG_DWORD /d 1 /f >NUL 2>&1
 :: https://docs.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
 REG ADD "HKLM\Software\Policies\Microsoft\MicrosoftEdge\ServiceUI" /v AllowWebContentOnNewTabPage  /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKLM\Software\Policies\Microsoft\MicrosoftEdge\Internet Settings" /v ConfigureOpenEdgeWith  /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -886,6 +1023,10 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Edge\Recommended" /v SmartScreenForTru
 :: REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v BackgroundModeEnabled  /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f > NUL 2>&1
+reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!dss-winrt-telemetry.js" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry.js" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry-event_8ac43a41e5030538" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry-inter_58073761d33f144b" /t REG_DWORD /d 0 /f > nul 2>&1
 
 :: Do not allow Edge sending intranet or internet history
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "MicrosoftEdgeDataOptIn" /t REG_DWORD /d 0 /f > nul 2>&1
@@ -908,12 +1049,12 @@ REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v "Start" /t REG_DWO
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v "Start" /t REG_DWORD /d 4 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d 4 /f > nul 2>&1
 :: https://docs.microsoft.com/en-us/windows-server/administration/performance-tuning/role/file-server/
-:: https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds_vdi-recommendations-1909
+:: https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-vdi-recommendations-2004
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DisableBandwidthThrottling" /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "FileInfoCacheEntriesMax" /t REG_DWORD /d 32768 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DirectoryCacheEntriesMax" /t REG_DWORD /d 4096 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "FileNotFoundCacheEntriesMax" /t REG_DWORD /d 32768 /f > nul 2>&1
-REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DormantFileLimit" /t REG_DWORD /d 256 /f > nul 2>&1
+:: REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "DormantFileLimit" /t REG_DWORD /d 1023 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "MaxCmds" /t REG_DWORD /d 32768 /f > nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v "RequireSecuritySignature" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v DisableLeasing /t REG_DWORD /d 1 /f > nul 2>&1
@@ -953,9 +1094,13 @@ REG ADD "HKLM\System\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "Netbt
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "DoNotShowFeedbackNotifications" /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\Software\Policies\Microsoft\WindowsInkWorkspace" /v "AllowSuggestedAppsInWindowsInkWorkspace" /t REG_DWORD /d 0 /f > nul 2>&1
 :: Disable Game DVR and Game Bar / Disable the message "Press Win + G to open Game bar" / "Press Win + G to record a clip"
+:: Disables Fullscreen Optimizations, GameDVR and GameBar which is known to cause stutter and low FPS in games. Also fixes most game crashes.
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AllowGameDVR" /t REG_DWORD /d 0 /f > nul 2>&1
+REG ADD "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR" /v "value" /t REG_DWORD /d 0 /f > nul 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d 0 /f > nul 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "HistoricalCaptureEnabled" /t REG_DWORD /d 0 /f > nul 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AudioCaptureEnabled" /t REG_DWORD /d 0 /f > nul 2>&1
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "CursorCaptureEnabled" /t REG_DWORD /d 0 /f > nul 2>&1
 REG ADD "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v "ActivationType" /t REG_DWORD /d 1 /f > nul 2>&1
 REG ADD "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v "CLSID" /t REG_SZ /d "{cbfd414c-5037-3c98-a85e-a5e7ca509cfc}" /f > nul 2>&1
 REG ADD "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v "Server" /t REG_SZ /d "Windows.Gaming.GameBar.Internal.PresenceWriterServer" /f > nul 2>&1
@@ -985,6 +1130,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" /v "DisabledB
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\TabletPC" /v "PreventHandwritingDataSharing" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\HandwritingErrorReports" /v "PreventHandwritingErrorReports" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization" /v AllowInputPersonalization /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows Search\Gathering Manager" /v "DisableBackoff" /t REG_DWORD /d 1 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f /REG:64 > nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortanaAboveLock" /t REG_DWORD /d 0 /f > nul 2>&1
@@ -1028,6 +1174,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "DisableBe
 reg add "HKLM\SYSTEM\ControlSet001\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SQMLogger" /v "Start" /t REG_DWORD /d 0 /f > nul 2>&1
+:: Turn off "Improve inking and typing"
 reg add "HKLM\SOFTWARE\Microsoft\Input\TIPC" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoDriveTypeAutoRun" /t REG_DWORD /d 255 /f > nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoAutorun" /t REG_DWORD /d 1 /f > nul 2>&1
@@ -1222,7 +1369,8 @@ REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v EnableRID64640  /t REG_
 REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v EnableRID66610  /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\NvControlPanel2\Client" /v OptInOrOutPreference /t REG_DWORD /d 0 /f >NUL 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\services\NvTelemetryContainer" /v Start /t REG_DWORD /d 4 /f >NUL 2>&1
-REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\Startup\SendTelemetryData" /v @ /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\Global\Startup" /v SendTelemetryData /t REG_DWORD /d 0 /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\NVIDIA Corporation\Global\Startup\SendTelemetryData" /v 0 /t REG_DWORD /d 0 /f >NUL 2>&1
 :: 18.5.4.1 (L1) Ensure 'Turn off multicast name resolution' is set to 'Enabled'
 REG ADD "HKLM\Software\policies\Microsoft\Windows NT\DNSClient" /v "EnableMulticast" /t REG_DWORD /d "0" /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" /v DisableSmartNameResolution /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -1242,11 +1390,13 @@ REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\Beep" /v Start /t REG_DWORD /d 4
 reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /v "backup" /d 0 /t REG_DWORD /f >NUL 2>&1
 :: Users do not need to press Ctl-Alt-Delete to log into the system
 reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "disablecad" /d 1 /t REG_DWORD /f >NUL 2>&1
+reg ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "IgnoreShiftOvveride" /d 1 /t REG_SZ /f >NUL 2>&1
 reg ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "disablecad" /d 1 /t REG_DWORD /f >NUL 2>&1
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Print" /v "PortThreadPriority" /d 1 /t REG_DWORD /f >NUL 2>&1
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Print" /v "NetPrinterDecayPeriode" /d 600000 /t REG_DWORD /f >NUL 2>&1
 :: Disable Timeline
 :: REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableActivityFeed" /d "0" /t REG_DWORD /f >NUL 2>&1
+:: Disable Collect Activity History
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /d "0" /t REG_DWORD /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /d "0" /t REG_DWORD /f >NUL 2>&1
 :: Local users on domain-joined computers must not be enumerated - https://www.stigviewer.com/stig/windows_8/2013-10-01/finding/V-36684
@@ -1302,6 +1452,9 @@ REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v "srv
 :: Office Security
 reg add "HKLM\Software\Microsoft\Office\16.0\Common\COM Compatibility" /v "ActivationFilterOverride" /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\Software\Microsoft\Office\16.0\Common\COM Compatibility" /v "Compatibility Flags" /t REG_DWORD /d 1024 /f >NUL 2>&1
+:: Skype for Business options
+REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\office\16.0\Lync /t REG_DWORD /v EnableSIPHighSecurityMode /d 0 /f >NUL 2>&1
+REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\office\16.0\Lync /t REG_DWORD /v EnableAppearOffline /d 1 /f >NUL 2>&1
 
 :: Disable Windows Admin Center Notification 
 reg add HKLM\SOFTWARE\Microsoft\ServerManager /v DoNotPopWACConsoleAtSMLaunch /d 1 /t REG_DWORD /f >NUL 2>&1
@@ -1464,6 +1617,8 @@ reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\Fol
 
 :: Enable RDP
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v "fDenyTSConnections" /d 0 /t REG_DWORD /f >nul 2>&1
+:: Multiple RDP sessions
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v "fSingleSessionPerUser" /d 0 /t REG_DWORD /f >nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v "fEnableWinStation" /d 1 /t REG_DWORD /f >nul 2>&1
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v "UserAuthentication" /d 1 /t REG_DWORD /f >nul 2>&1
 :: REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v "SecurityLayer" /d 2 /t REG_DWORD /f >nul 2>&1
@@ -1476,6 +1631,9 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoRe
 reg add "HKLM\SYSTEM\ControlSet001\Services\Dnscache\Parameters" /v "DisableParallelAandAAAA" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\SYSTEM\ControlSet002\Services\Dnscache\Parameters" /v "DisableParallelAandAAAA" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters" /v "DisableParallelAandAAAA" /t REG_DWORD /d "1" /f >nul 2>&1
+
+:: Enabling DNS over HTTPS (DoH) on Windows 10 - http://woshub.com/enable-dns-over-https-windows/
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters" /v "EnableAutoDoh" /t REG_DWORD /d "2" /f >nul 2>&1
 
 :: Disable NDU = Network Diagnostic Usage
 reg add "HKLM\SYSTEM\ControlSet001\Services\Ndu" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
@@ -1551,8 +1709,6 @@ REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion /V DevicePath /T REG_MULT
 
 :: DefaultTTL von 128 auf 64 ändern
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v DefaultTTL /t REG_DWORD /d 64 /f >NUL 2>&1
-:: Enable TCP/IP Task Offload
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v DisableTaskOffload /t REG_DWORD /d 0 /f >NUL 2>&1
 
 :: https://github.com/rticommunity/rtiperftest/blob/master/srcDoc/tuning_os.rst
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v MaximumReassemblyHeaders /t REG_DWORD /d 65535 /f >NUL 2>&1
@@ -1608,8 +1764,9 @@ reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown" /v "bPr
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown" /v "iFileAttachmentPerms" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown" /v "iProtectedView" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cCloud" /v "bAdobeSendPluginToggle" /t REG_DWORD /d "1" /f >nul 2>&1
-reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cDefaultLaunchURLPerms" /v "iURLPerms" /t REG_DWORD /d "1" /f >nul 2>&1
-reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cDefaultLaunchURLPerms" /v "iUnknownURLPerms" /t REG_DWORD /d "1" /f >nul 2>&1
+:: Adobe Reader DC must Block Websites - https://www.stigviewer.com/stig/adobe_acrobat_reader_dc_classic_track/2018-06-11/finding/V-65767
+:: reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cDefaultLaunchURLPerms" /v "iURLPerms" /t REG_DWORD /d "1" /f >nul 2>&1
+:: reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cDefaultLaunchURLPerms" /v "iUnknownURLPerms" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cServices" /v "bToggleAdobeDocumentServices" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cServices" /v "bToggleAdobeSign" /t REG_DWORD /d "1" /f >nul 2>&1
 reg add "HKLM\Software\Policies\Adobe\Acrobat Reader\DC\FeatureLockDown\cServices" /v "bTogglePrefsSync" /t REG_DWORD /d "1" /f >nul 2>&1
@@ -1656,6 +1813,8 @@ reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer /v FolderRedirec
 :: Disable sending alert for the Crash Control
 reg add HKLM\SYSTEM\CurrentControlSet\Control\CrashControl /v SendAlert /d 0 /t REG_DWORD /f >NUL 2>&1
 reg add HKLM\SYSTEM\CurrentControlSet\Control\CrashControl /v CrashDumpEnabled /d 0 /t REG_DWORD /f >NUL 2>&1
+reg add HKLM\SYSTEM\CurrentControlSet\Control\CrashControl /v MinidumpsCount /d 1 /t REG_DWORD /f >NUL 2>&1
+reg add HKLM\SYSTEM\CurrentControlSet\Control\CrashControl /v AlwaysKeepMemoryDump /d 0 /t REG_DWORD /f >NUL 2>&1
 
 :: How long the OS will wait for a disk write or read to take place on the SAN without throwing an error
 reg add "HKLM\SYSTEM\CurrentControlSet\services\Disk" /v TimeOutValue /d 60 /t REG_DWORD /f >NUL 2>&1
@@ -1688,6 +1847,7 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v AllowDomainPINLogon
 
 :: Runas-Admin
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "C:\Windows\DNSQuerySniffer.exe" /t REG_SZ /d "~ RUNASADMIN" /f >NUL 2>&1
+REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "C:\Windows\NetworkUsageView.exe" /t REG_SZ /d "~ RUNASADMIN" /f >NUL 2>&1
 
 :: Allow OneDrive to disable Windows permission inheritance in folders synced read-only - improves the performance of the sync app - https://docs.microsoft.com/en-us/onedrive/use-group-policy#computer-configuration-policies
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" /v PermitDisablePermissionInheritance /t REG_DWORD /d 1 /f >NUL 2>&1
@@ -1734,11 +1894,29 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device" 
 :: Blocks a DLL Load from the current working directory if the current working directory is set to a WebDAV folder  (set it to 0x1)
 :: Blocks a DLL Load from the current working directory if the current working directory is set to a remote folder (such as a WebDAV or UNC location) (set it to 0x2)
 :: ---------------------
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v CWDIllegalInDllSearch /t REG_DWORD /d 0x2 /f >NUL 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v CWDIllegalInDllSearch /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v SafeDLLSearchMode /t REG_DWORD /d 1 /f >NUL 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v ProtectionMode /t REG_DWORD /d 1 /f >NUL 2>&1
 
+:: Versionierung von WinUnity in der Registry
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Image" /v Name /t REG_SZ /d "WinUnity" /f >NUL 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Image" /v Revision /t REG_SZ /d 0.1 /f >NUL 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Image" /v InstallDate /t REG_SZ /d "%DATE%" /f >NUL 2>&1
+set mytime=%time:~0,5%
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Image" /v InstallTime /t REG_SZ /d "%mytime%" /f >NUL 2>&1
+for /f "skip=1 delims==" %%i in ('wmic baseboard get product') do @for /f "delims=" %%b in ("%%i") do @set Model=%%b
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Image" /v "Product" /t REG_SZ /d "%Model%" /f >NUL 2>&1
 
+:: Add "Eingabeaufforderung (cmd)" to directory context menu:
+:: reg add HKCR\Directory\shell\1cmd /ve /t REG_SZ /d "Eingabeaufforderung (cmd)" /f >NUL 2>&1
+:: reg add HKCR\Directory\shell\1cmd\command /ve /t REG_SZ /d "cmd.exe /s /k pushd \"%V\"" /f >NUL 2>&1
+:: reg add HKCR\Directory\Background\shell\1cmd /ve /t REG_SZ /d "Eingabeaufforderung (cmd)" /f >NUL 2>&1
+:: reg add HKCR\Directory\Background\shell\1cmd\command /ve /t REG_SZ /d "cmd.exe /s /k pushd \"%V\"" /f >NUL 2>&1
+
+:: Unlocks the ability to modify sleeping CPU cores to improve performance and decrease stutter in games.
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\54533251-82be-4824-96c1-47b60b740d00\943c8cb6-6f93-4227-ad87-e9a3feec08d1" /v Attributes /t REG_DWORD /d 2 /f >NUL 2>&1
+:: Option will be added to: Power Options > High Performance > Change Plan Settings > Change advanced power settings > Processor power management -  Default data is 1 (option hidden)
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\54533251-82be-4824-96c1-47b60b740d00\0cc5b647-c1df-4637-891a-dec35c318583" /v Attributes /t REG_DWORD /d 0 /f  > nul 2>&1
 powercfg.exe -s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c >NUL 2>&1
 powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 >NUL 2>&1
 :: Disable display and sleep mode timeouts
@@ -1753,6 +1931,65 @@ fsutil behavior set disablelastaccess 1 >NUL 2>&1
 fsutil behavior set memoryusage 2 >NUL 2>&1
 :: Trim aktivieren
 fsutil behavior set DisableDeleteNotify 0 >NUL
+
+:: Disable Disk Quota tab, which appears as a tab when right-clicking on drive letter - Properties.
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DiskQuota" /v "Enable" /t REG_DWORD /d 0 /f > nul 2>&1
+
+:: Enable Developer Mode (enables you to run XAML apps you develop in Visual Studio which haven't been certified yet) - (prerequisite for Linux subsystem).
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v "AllowAllTrustedApps" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v "AllowDevelopmentWithoutDevLicense" /t REG_DWORD /d 1 /f > nul 2>&1
+
+:: Anwendungsblockade "ClickOnce Trust aktivieren" .NET-Framework aufheben - Ihre Sicherheitseinstellungen lassen die Installation dieser Anwendung auf Ihrem Computer nicht zu.
+:: this only partially mitigates the risk of malicious ClickOnce Appps - the ability to run the manifest is disabled, but hash retrieval is still possible
+reg add "HKLM\SOFTWARE\Microsoft\.NETFramework\Security\TrustManager\PromptingLevel" /v "Internet" /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v MyComputer /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v LocalIntranet /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v Internet /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v TrustedSites /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v UntrustedSites /t REG_SZ /d "Énabled" /f > nul 2>&1
+:: https://docs.microsoft.com/en-us/security/engineering/solving-tls1-problem
+reg add HKLM\SOFTWARE\Microsoft\.NETFramework\v4.0.30319 /v SystemDefaultTlsVersions /t REG_DWORD /d 1 /f /reg:64 > nul 2>&1
+reg add HKLM\SOFTWARE\Microsoft\.NETFramework\v4.0.30319 /v SystemDefaultTlsVersions /t REG_DWORD /d 1 /f /reg:32 > nul 2>&1
+:: Disable legacy Protocols SSL+TLS - https://docs.microsoft.com/en-us/windows-server/security/tls/tls-registry-settings
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\PCT 1.0\Client" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\PCT 1.0\Client" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Client" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Client" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Client" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Client" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+:: Discord won't update or start, can't connect to server: Requires TLS 1.0
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Client" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Client" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\PCT 1.0\Server" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\PCT 1.0\Server" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Server" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Server" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Server" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Server" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Server" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Server" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Server" /v "DisabledByDefault" /t REG_DWORD /d 1 /f > nul 2>&1
+:: reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Server" /v "Enabled" /t REG_DWORD /d 0 /f > nul 2>&1
+:: Enable TLS 1.3
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.3\Client" /v "DisabledByDefault" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.3\Client" /v "Enabled" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.3\Server" /v "DisabledByDefault" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.3\Server" /v "Enabled" /t REG_DWORD /d 1 /f > nul 2>&1
+
+:: Encryption - Cipher Suites (order) - All cipher included to avoid application problems - https://docs.microsoft.com/en-us/azure/cloud-services/applications-dont-support-tls-1-2
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL\00010002" /v Functions /t REG_SZ /d "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_3DES_EDE_CBC_SHA,TLS_RSA_WITH_NULL_SHA256,TLS_RSA_WITH_NULL_SHA,TLS_PSK_WITH_AES_256_GCM_SHA384,TLS_PSK_WITH_AES_128_GCM_SHA256,TLS_PSK_WITH_AES_256_CBC_SHA384,TLS_PSK_WITH_AES_128_CBC_SHA256,TLS_PSK_WITH_NULL_SHA384,TLS_PSK_WITH_NULL_SHA256" /f > nul 2>&1
+
+:: Disable Visual Studio Code Telemetry
+reg add "HKLM\Software\Policies\Microsoft\VisualStudio\Feedback" /v "DisableFeedbackDialog " /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\Software\Policies\Microsoft\VisualStudio\Feedback" /v "DisableEmailInput" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\Software\Policies\Microsoft\VisualStudio\Feedback" /v "DisableScreenshotCapture" /t REG_DWORD /d 1 /f > nul 2>&1
+reg add "HKLM\Software\Microsoft\VSCommon\16.0\SQM" /v "OptIn" /t REG_DWORD /d 0 /f /reg:32 > nul 2>&1
+reg add "HKLM\Software\Microsoft\VSCommon\16.0\SQM" /v "OptIn" /t REG_DWORD /d 0 /f /reg:64 > nul 2>&1
+
+:: ExecutionPolicy PowerShell to bypass
+reg add "HKLM\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" /v "ExecutionPolicy" /t REG_SZ /d "Bypass" /f > nul 2>&1
 
 net accounts /MaxPWAge:unlimited >NUL 2>&1
 
