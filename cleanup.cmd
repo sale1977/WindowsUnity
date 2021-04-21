@@ -412,7 +412,7 @@ reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLe
 reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v LocalIntranet /t REG_SZ /d "Enabled" /f > nul 2>&1
 reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v Internet /t REG_SZ /d "Enabled" /f > nul 2>&1
 reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v TrustedSites /t REG_SZ /d "Enabled" /f > nul 2>&1
-reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v UntrustedSites /t REG_SZ /d "Énabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v UntrustedSites /t REG_SZ /d "Enabled" /f > nul 2>&1
 
 :: Disable-Lockscreen
 Ren Microsoft.LockApp_cw5n1h2txyewy Microsoft.LockApp_cw5n1h2txyewy.backup >nul 2>&1
