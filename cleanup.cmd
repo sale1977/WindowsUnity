@@ -8,6 +8,19 @@ sc config upnphost start= disabled > NUL 2>&1
 sc config wmpnetworksvc start= disabled > NUL 2>&1
 sc config DiagTrack start= disabled > NUL 2>&1
 sc config diagnosticshub.standardcollector.service start= disabled > NUL 2>&1
+sc config XblAuthManager start= demand > NUL 2>&1
+sc config XblGameSave start= demand > NUL 2>&1
+sc config XboxNetApiSvc start= demand > NUL 2>&1
+sc config XboxGipSvc start= demand > NUL 2>&1
+
+:: Disable Superfetch (A must for SSD drives, but good to do in general)
+:: Disabling this service prevents further creation of PF files in C:\Windows\Prefetch.
+:: After disabling this service, it is completely safe to delete everything in that folder, except for the ReadyBoot folder.
+sc config SysMain start= disabled
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d 0 /f > nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d 0 /f > nul 2>&1
+
+:: sc config xbgm start= demand > NUL 2>&1
 :: WpnService required for PowerToys
 :: sc config WpnService start= disabled 
 :: sc config WpnUserService start= disabled 
@@ -50,8 +63,10 @@ schtasks /Change /TN "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload
 schtasks /Change /TN "Microsoft\Windows\Feedback\Siuf\DmClient" /disable >NUL 2>&1
 schtasks /Change /TN "Microsoft\Windows\DiskFootprint\Diagnostics" /disable >NUL 2>&1
 schtasks /change /TN "Microsoft\Windows\Device Information\Device" /DISABLE >NUL 2>&1
-:: schtasks /Change /TN "Microsoft\Windows\NetTrace\GatherNetworkInfo" /Disable >NUL 2>&1
-:: schtasks /Change /TN "Microsoft\Windows\Maintenance\WinSAT" /Disable >NUL 2>&1
+schtasks /Change /TN "Microsoft\Windows\NetTrace\GatherNetworkInfo" /Disable >NUL 2>&1
+schtasks /Change /TN "Microsoft\Windows\Maintenance\WinSAT" /Disable >NUL 2>&1
+SCHTASKS /Change /TN "\Microsoft\Windows\Work Folders\Work Folders Maintenance Work" /DISABLE >NUL 2>&1
+SCHTASKS /Change /TN "\Microsoft\Windows\Work Folders\Work Folders Logon Synchronization" /DISABLE >NUL 2>&1
 
 del "C:\Users\Public\Desktop\Microsoft Edge.lnk" /Q NUL 2>&1
 attrib -r %WINDIR%\SYSTEM32\backup.ps1 >NUL 2>&1
@@ -284,12 +299,12 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\WerSvc" /v "Start" /t REG_DWORD 
 
 :: DEL /F /S /Q /A "%AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\*" >NUL 2>&1
 
-:: HPET deaktivieren
-:: Vorige Einstellung: bcdedit /set useplatformclock false
+:: HPET (High Precision Event Timer) deaktivieren
 bcdedit /set tscsyncpolicy enhanced > NUL 2>&1
 bcdedit /set pae alwayson > NUL 2>&1
-bcdedit /set useplatformclock true > NUL 2>&1
-bcdedit /set disabledynamictick > NUL 2>&1
+bcdedit /deletevalue useplatformclock > NUL 2>&1
+:: bcdedit /set useplatformclock true > NUL 2>&1
+bcdedit /set disabledynamictick yes > NUL 2>&1
 
 :: Enable Features
 Dism.exe /Online /Enable-Feature /NoRestart /featurename:DirectPlay /all /Quiet >nul 2>&1
@@ -315,8 +330,8 @@ powershell -command " get-appxpackage -allusers *Microsoft.WindowsFeedback* | re
 powershell -command " get-appxpackage -allusers 'Microsoft.GetHelp' | remove-appxpackage " >nul 2>&1
 powershell -command " get-appxpackage -allusers 'Microsoft.SkypeApp' | remove-appxpackage " >nul 2>&1
 powershell -command " get-AppxPackage *Microsoft.MicrosoftOfficeHub* -AllUsers | Remove-AppxPackage" >nul 2>&1
-:: powershell Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2 -norestart
-:: powershell Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -norestart
+:: powershell Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2 -norestart >nul 2>&1
+:: powershell Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -norestart >nul 2>&1
 
 :: start C:\Drivers\installDrivers.cmd
 
@@ -390,6 +405,15 @@ Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\sh
 Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\BootOptions" /v "icon" /t REG_SZ /d "RelPost" /f >nul 2>&1
 Reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\BootOptions\command" /ve /t REG_SZ /d "Shutdown -r -o -f -t 00" /f >nul 2>&1
 
+:: Anwendungsblockade "ClickOnce Trust aktivieren" .NET-Framework aufheben - Ihre Sicherheitseinstellungen lassen die Installation dieser Anwendung auf Ihrem Computer nicht zu.
+:: this only partially mitigates the risk of malicious ClickOnce Appps - the ability to run the manifest is disabled, but hash retrieval is still possible
+reg add "HKLM\SOFTWARE\Microsoft\.NETFramework\Security\TrustManager\PromptingLevel" /v "Internet" /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v MyComputer /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v LocalIntranet /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v Internet /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v TrustedSites /t REG_SZ /d "Enabled" /f > nul 2>&1
+reg add "HKLM\SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel" /v UntrustedSites /t REG_SZ /d "Énabled" /f > nul 2>&1
+
 :: Disable-Lockscreen
 Ren Microsoft.LockApp_cw5n1h2txyewy Microsoft.LockApp_cw5n1h2txyewy.backup >nul 2>&1
 
@@ -398,6 +422,18 @@ Ren Microsoft.LockApp_cw5n1h2txyewy Microsoft.LockApp_cw5n1h2txyewy.backup >nul 
 
 :: Cleanup Taskbar
 powershell -noni -nol -nop -ex bypass -file "C:\Assets\Scripts\UnpinTaskbar.ps1" >nul 2>&1
+
+:: XBOX Gamebar deaktivieren
+takeown /f "%WinDir%\System32\GameBarPresenceWriter.exe" /a >nul 2>&1
+icacls "%WinDir%\System32\GameBarPresenceWriter.exe" /grant:r Administratoren:F /c >nul 2>&1
+taskkill /im GameBarPresenceWriter.exe /f >nul 2>&1
+move "C:\Windows\System32\GameBarPresenceWriter.exe" "C:\Windows\System32\GameBarPresenceWriter.OLD" >nul 2>&1
+
+:: Kontextmenue Eingabeaufforderung erweitern (shift-key)
+regedit /S "C:\Assets\cmd-here-windows-10\cmd_ps_ab_hier.reg" >nul 2>&1
+
+:: Autologon default user
+autologon64 admin winunity demo /accepteula
 
 wevtutil cl system && wevtutil cl application && wevtutil cl security  > NUL 2>&1
 :: msg /TIME:3 * Gute Neuigkeiten: Optimiertes Windows erfolgreich ausgerollt!
